@@ -1,81 +1,115 @@
 import React from 'react';
 import './App.css';
 import axios from 'axios';
-import instance from './Axios';
+import Cars from './Cars';
 class App extends React.Component {
+// ICON ARCHIVE
+  state = {
+    login: false,
+    cars: [],
+  }
+  
 
-  state = {me: "person"}
   // getPhp = () => {
-  //   fetch(`http://localhost:8181/shoppingprojectphp/api/demo.php`, {
-  //       method: 'POST',
-  //       headers: {
-  //         Accept: 'application/json',
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify({
-  //         content: 'test1'
-  //       })
+  //   axios.get(`http://localhost:8181/shoppingprojectphp/api/demo.php`)
+  //     .then((response) => {
+  //       console.log(response.data)
   //     })
-  //     .then(res => res.json())
-  //     .then(response => {
-  //       console.log('response: ');
-  //       console.log(response);
+  //     .catch(function (err) {
+  //       console.log('error');
+  //       console.log(err);
   //     });
   // };
 
-  getPhp = () => {
-    axios.get(`http://localhost:8181/shoppingprojectphp/api/demo.php`)
-      .then((response) => {
-        console.log(response.data)
+    getList = () => {
+      console.log("list")
+      if (this.state) {
+        let bodyFormData = new FormData();
+        bodyFormData.append("action", "list");
+        const config = {
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        };
+        axios.post(
+          // 'http://localhost:8181/shoppingprojectphp/api/user.php',
+          'http://localhost:8181/shoppingprojectphp/api/cars.php', 
+          bodyFormData,
+          config
+        )
+        .then( response => {
+          console.log(response.data);
+          this.setState({cars: response.data.result});
+        })
+        .catch( error => {
+          console.log(error);
+        });
+      }
+    }
+
+    postPhp = (e) => {
+      console.log('form submited');
+      e.preventDefault();
+      
+      let bodyFormData = new FormData();
+      // bodyFormData.append("action", "list");
+      bodyFormData.append("action", "login");
+      bodyFormData.append("username", "sa");
+      bodyFormData.append("password", "sa");
+
+      const config = {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      };
+      axios.post(
+        'http://localhost:8181/shoppingprojectphp/api/user.php',
+        // 'http://localhost:8181/shoppingprojectphp/api/cars.php', 
+        // bodyFormData,
+        {
+          data:"login",
+          username:"sa",
+          password:"sa",
+        },
+        config
+      )
+      .then( response => {
+        // console.log(response.data.result);
+        this.setState({login: response.data.result});
+        console.log(this.state.login)
+        if (this.state.login) {
+          this.getList();
+        }
       })
-      .catch(function (err) {
-        console.log('error');
-        console.log(err);
+      .catch( error => {
+        console.log(error);
       });
-  };
 
-  // options = {
-  //   method: 'POST',
-  //   headers: { 'content-type': 'application/form-data' },
-  //   data: personForm,
-  //   url: 'phpfile.php',
-  // };
 
-  postPhp = (e) => {
-    e.preventDefault();
-
-    // axios({
-      //     method: 'get',
-    //     headers: { 'content-type': 'application/form-data' },
-    //     data: 'leo',
-    //     url: {this.data},
-    //   })
-    //   .then(function (response) {
-      //     console.log(response.data);
-      //   })
-      //   .catch(function (err) {
-        //     console.log('error');
-        //     console.log(err);
-        //   });
-        
-      // const data = "leo";
-      // axios.post(`http://localhost:8181/shoppingprojectphp/post.php?data=${data}`)
+      // axios.post(
+      //   'http://localhost:8181/shoppingprojectphp/post.php',{
+      //   data: 'leo'
+      //   },
+      //   {
+      //     headers: {
+      //       'Content-type': 'multipart/form-data'
+      //     }
+      //   }
+      // )
+      // const config = {
+      //   headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      // };  
+      // axios.post(
+      //   'http://localhost:8181/shoppingprojectphp/post.php', {
+      //     data: {
+      //       name: 'leo',
+      //       email:'myemail@gmail'
+      //     } 
+      //   },
+      //   config
+      // )
       // .then(function (response) {
-      //   console.log(response.data);
+      //   console.log(response);
       // })
       // .catch(function (error) {
       //   console.log(error);
       // });
-      console.log('form submited');
-      const data = "leo";
-      axios.post(`http://localhost:8181/shoppingprojectphp/post.php?data=${data}`)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
   };
 
   render() {
@@ -86,7 +120,8 @@ class App extends React.Component {
           <button type="submit"> CLICK TO POST DATA </button>
         </form>
           {/* <button onClick = {this.getPhp}> CLICK TO GET DATA </button> */}
-        </div>
+        <Cars carsList={this.state.cars}/>
+      </div>
     );
   }
 }
