@@ -1,7 +1,7 @@
 import React from 'react'
 
 function Cars({carsList}) {
-    console.log(carsList);
+    // console.log(carsList);
 
     const mapCars = () =>{
         return carsList.map(car => {
