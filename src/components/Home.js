@@ -1,16 +1,15 @@
 import React from 'react'
-import { BrowserRouter as Router, Link, NavLink, Redirect} from 'react-router-dom';
-import Route from 'react-router-dom/Route';
+import {Link} from 'react-router-dom';
+import LoginForm from './LoginForm';
 
-function Home() {
-
+function Home(props) {
     return (
-        <div>
             <div>
-                    <Link to='/app/leo'>goapp</Link>
-                </div>
-        
-        </div>
+                <LoginForm {...props}/>
+                <Link to="/signup">SignUp</Link>
+                <h1>Landing Page</h1>
+            </div>
+ 
     )
 }
 

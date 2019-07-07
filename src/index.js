@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Index1 from './index1';
+import App from './components/App';
 
-ReactDOM.render(<Index1 />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 
 
