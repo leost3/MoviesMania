@@ -56,7 +56,11 @@ class SignupForm extends React.Component {
         config
       )
       .then( response => {
-        console.log(response);
+        console.log(response)
+        if (response.data.registration === 'created') {
+          this.props.history.push(`/app/${this.state.username}`);
+          this.props.handleLogin()
+        } 
       })
       .catch( error => {
         console.log(error);

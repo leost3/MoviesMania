@@ -13,15 +13,13 @@ class App extends React.Component {
   }
 
 
-  handleLogin = (e) => {
+  handleLogin = () => {
     this.setState({isLoggedIn: true});
-    console.log(this.state.isLoggedIn)
   }
 
 
 
   render() {
-      console.log(this.props)
     return (
         <div>
             <Router>
@@ -34,7 +32,9 @@ class App extends React.Component {
                         <Route path='/' exact strict render={ props => (
                             <Home  {...props} handleLogin={this.handleLogin} loggedInStatus={this.state.isLoggedIn}  />
                         )} />
-                        <Route path='/signup' component={SignupForm} />
+                        <Route path='/signup' render={ props => (
+                            <SignupForm {...props} handleLogin={this.handleLogin} />
+                        )} />
                         <Route component={Error} />
                     </Switch>
                 </div>
