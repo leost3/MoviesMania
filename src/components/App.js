@@ -3,7 +3,7 @@ import Home from './Home';
 import Error from './Error';
 import { BrowserRouter as Router, Switch} from 'react-router-dom';
 import Route from 'react-router-dom/Route';
-import SignupForm from './SignupForm';
+import SignupForm from './auth/SignupForm';
 import MoviesList from './MoviesList';
 
 class App extends React.Component {

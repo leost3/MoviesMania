@@ -1,8 +1,9 @@
 import React from 'react'
 import {Link} from 'react-router-dom';
-import LoginForm from './LoginForm';
+import LoginForm from './auth/LoginForm';
 
 function Home(props) {
+
     return (
             <div>
                 <LoginForm {...props}/>

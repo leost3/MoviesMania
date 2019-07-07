@@ -19,31 +19,28 @@ class LoginForm extends React.Component {
     handleSubmit = (e) => {
       e.preventDefault();
       console.log('form submited');
-    const config = {
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    };
-    axios.post(
-      'http://localhost:8181/shoppingprojectphp/api/user.php',
-      {
-        action:"login",
-        username:this.state.username,
-        password:this.state.password,
-      },
-      config
-    )
-    .then( response => {
-        // console.log(this.state);
-    console.log(response.data.isLoggedIn);
-    if (response.data.isLoggedIn) {
-      this.props.handleLogin(response.data);
-      this.props.history.push(`app/${this.state.username}`);
-    } 
-    })
-    .catch( error => {
-      console.log(error);
-    });
+      const config = {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      };
+      axios.post(
+        'http://localhost:8181/shoppingprojectphp/api/user.php',
+        {
+          action:"login",
+          username:this.state.username,
+          password:this.state.password,
+        },
+        config
+      )
+      .then( response => {
+        if (response.data.isLoggedIn) {
+          this.props.handleLogin(response.data);
+          this.props.history.push(`app/${this.state.username}`);
+        } 
+      })
+      .catch( error => {
+        console.log(error);
+      });
     }
-    
     render() {
         return (
           <div>
