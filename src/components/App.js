@@ -5,11 +5,13 @@ import { BrowserRouter as Router, Switch} from 'react-router-dom';
 import Route from 'react-router-dom/Route';
 import SignupForm from './auth/SignupForm';
 import MoviesList from './MoviesList';
+import MovieDetails from './MovieDetails';
 
 class App extends React.Component {
  
   state = {
     isLoggedIn: false,
+    detailedMovie: [],
   }
 
 
@@ -17,7 +19,10 @@ class App extends React.Component {
     this.setState({isLoggedIn: true});
   }
 
-
+  getDetails = (movieDetails) => {
+    console.log(movieDetails);
+    this.setState({...this.state, detailedMovie: movieDetails});
+  }
 
   render() {
     return (
@@ -27,20 +32,29 @@ class App extends React.Component {
                     <Switch>
                         {/* <Route path='/app/:appname' exact render={({match})=>(this.state.loggedIn ? ( <App params={match} />) : (< Redirect to='/' />))}/> */}
                         <Route path='/app/:appname' exact render={ props => (
-                            <MoviesList {...props} loggedInStatus={this.state.isLoggedIn}/>
-                        )} />
+                            <MoviesList {...props} loggedInStatus={this.state.isLoggedIn} getDetails={this.getDetails}/>
+                        )} 
+                        />
+                         {/* <Route path='/app/:appname' exact render={ props => (
+                           this.state.isLoggedIn ? ( <MoviesList {...props} loggedInStatus={this.state.isLoggedIn}/>) : ( <Redirect to="/" /> )
+                        )}  */}
                         <Route path='/' exact strict render={ props => (
                             <Home  {...props} handleLogin={this.handleLogin} loggedInStatus={this.state.isLoggedIn}  />
-                        )} />
+                        )} 
+                        />
                         <Route path='/signup' render={ props => (
                             <SignupForm {...props} handleLogin={this.handleLogin} />
-                        )} />
+                        )} 
+                        />
+                        <Route path='/app/:username/:movie' render={ props => (
+                            <MovieDetails {...props} handleLogin={this.handleLogin} movieDetails={this.state.detailedMovie } />
+                        )} 
+                        />
                         <Route component={Error} />
                     </Switch>
                 </div>
             </Router>
         </div>
-
     )
 }
 
