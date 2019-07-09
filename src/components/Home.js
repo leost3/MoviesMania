@@ -6,7 +6,7 @@ function Home(props) {
 
     return (
             <div>
-                <LoginForm {...props}/>
+                <LoginForm {...props} loggedInStatus={props.loggedInStatus}/>
                 <Link to="/signup">SignUp</Link>
                 <h1>Landing Page</h1>
             </div>

@@ -16,6 +16,10 @@ class LoginForm extends React.Component {
       this.setState({...this.state, password:e.target.value})
     }
 
+    handleLogOut = () => {
+      localStorage.setItem("loggedIn", false)
+    }
+
     handleSubmit = (e) => {
       e.preventDefault();
       console.log('form submited');
@@ -34,6 +38,7 @@ class LoginForm extends React.Component {
       .then( response => {
         if (response.data.isLoggedIn) {
           this.props.handleLogin(response.data);
+          localStorage.setItem("loggedIn", true);
           this.props.history.push(`app/${this.state.username}`);
         } 
       })
@@ -41,7 +46,10 @@ class LoginForm extends React.Component {
         console.log(error);
       });
     }
-    render() {
+
+    renderForm = () => {
+      console.log('loggedin props', this.props.loggedInStatus)
+      if (!this.props.loggedInStatus) {
         return (
           <div>
               <form onSubmit={this.handleSubmit}>
@@ -49,6 +57,33 @@ class LoginForm extends React.Component {
                   <input className="" value={this.state.password} placeholder="password" type="text" onChange={this.handlePasswordInput}/>
                   <button type="submit"> Login </button>
               </form>
+          </div>
+        )
+      }
+      return (
+        <div>
+              <form onSubmit={this.handleLogOut}>
+                  <button type="submit"> Logout </button>
+              </form>
+          </div>
+      )
+
+    }
+
+
+    render() {
+      // console.log(this.props.loggedInStatus);
+        return (
+          
+          // <div>
+          //     <form onSubmit={this.handleSubmit}>
+          //         <input className="" value={this.state.username} placeholder="username" type="text" onChange={this.handleUsernameInput}/>
+          //         <input className="" value={this.state.password} placeholder="password" type="text" onChange={this.handlePasswordInput}/>
+          //         <button type="submit"> Login </button>
+          //     </form>
+          // </div>
+          <div>
+            {this.renderForm()}
           </div>
         )
     }

@@ -41,7 +41,7 @@ class MoviesList extends React.Component{
         // console.log(this.renderMovies());
         return (
             <div>
-                <Link to="/">Home</Link> <br/>
+                
                 User Status:  {this.props.loggedInStatus ? "Logged in" : "Logged Out"}
                 {this.renderMovies()}
 

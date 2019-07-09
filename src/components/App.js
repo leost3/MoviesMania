@@ -1,7 +1,7 @@
 import React from 'react';
 import Home from './Home';
 import Error from './Error';
-import { BrowserRouter as Router, Switch} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Link} from 'react-router-dom';
 import Route from 'react-router-dom/Route';
 import SignupForm from './auth/SignupForm';
 import MoviesList from './MoviesList';
@@ -10,10 +10,19 @@ import MovieDetails from './MovieDetails';
 class App extends React.Component {
  
   state = {
-    isLoggedIn: false,
+    isLoggedIn: true,
     detailedMovie: [],
   }
 
+  componentDidMount() {
+    
+    console.log(localStorage)
+    const isLoggedIn = (localStorage.getItem('loggedIn') === 'true' ? true : false);
+
+      console.log('localstorage', isLoggedIn);
+      this.setState({isLoggedIn});  
+      console.log('state',this.state.isLoggedIn)
+    }
 
   handleLogin = () => {
     this.setState({isLoggedIn: true});
@@ -29,6 +38,7 @@ class App extends React.Component {
         <div>
             <Router>
                 <div>
+                    <Link to="/">Home</Link>
                     <Switch>
                         {/* <Route path='/app/:appname' exact render={({match})=>(this.state.loggedIn ? ( <App params={match} />) : (< Redirect to='/' />))}/> */}
                         <Route path='/app/:appname' exact render={ props => (
