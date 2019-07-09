@@ -1,7 +1,7 @@
 import React from 'react';
 import Home from './Home';
 import Error from './Error';
-import { BrowserRouter as Router, Switch, Link} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Link, Redirect} from 'react-router-dom';
 import Route from 'react-router-dom/Route';
 import SignupForm from './auth/SignupForm';
 import MoviesList from './MoviesList';
@@ -15,22 +15,16 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    
-    console.log(localStorage)
     const isLoggedIn = (localStorage.getItem('loggedIn') === 'true' ? true : false);
-
-      console.log('localstorage', isLoggedIn);
-      this.setState({isLoggedIn});  
-      console.log('state',this.state.isLoggedIn)
-    }
+    this.setState({isLoggedIn});  
+  }
 
   handleLogin = () => {
     this.setState({isLoggedIn: true});
   }
 
-  getDetails = (movieDetails) => {
-    console.log(movieDetails);
-    this.setState({...this.state, detailedMovie: movieDetails});
+  getDetails = (detailedMovie) => {
+    this.setState({...this.state, detailedMovie});
   }
 
   render() {
@@ -41,7 +35,7 @@ class App extends React.Component {
                     <Link to="/">Home</Link>
                     <Switch>
                         {/* <Route path='/app/:appname' exact render={({match})=>(this.state.loggedIn ? ( <App params={match} />) : (< Redirect to='/' />))}/> */}
-                        <Route path='/app/:appname' exact render={ props => (
+                        <Route path='/app/movies' exact render={ props => (
                             <MoviesList {...props} loggedInStatus={this.state.isLoggedIn} getDetails={this.getDetails}/>
                         )} 
                         />
@@ -49,14 +43,14 @@ class App extends React.Component {
                            this.state.isLoggedIn ? ( <MoviesList {...props} loggedInStatus={this.state.isLoggedIn}/>) : ( <Redirect to="/" /> )
                         )}  */}
                         <Route path='/' exact strict render={ props => (
-                            <Home  {...props} handleLogin={this.handleLogin} loggedInStatus={this.state.isLoggedIn}  />
+                             this.state.isLoggedIn ?(<Redirect to='app/movies' />) : (<Home  {...props} handleLogin={this.handleLogin} loggedInStatus={this.state.isLoggedIn}  />) 
                         )} 
                         />
                         <Route path='/signup' render={ props => (
                             <SignupForm {...props} handleLogin={this.handleLogin} />
                         )} 
                         />
-                        <Route path='/app/:username/:movie' render={ props => (
+                        <Route path='/app/movies/:movieId' render={ props => (
                             <MovieDetails {...props} handleLogin={this.handleLogin} movieDetails={this.state.detailedMovie } />
                         )} 
                         />

@@ -18,7 +18,7 @@ function Movie(props) {
     const handleClick = () => {
         props.getDetails(props.movie);
         // props.movieDetails(props.movie);
-        props.history.push(`/app/username/${props.movie.title}`);
+        props.history.push(`/app/movies/${props.movie.id}`);
     }
 
     return (
