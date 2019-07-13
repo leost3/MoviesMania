@@ -1,7 +1,7 @@
 import React from 'react';
 // import { Link } from 'react-router-dom';
 
-function Movie(props) {
+function MovieCard(props) {
     const size = { 
         0: "w92",
         1: "w154",
@@ -16,8 +16,7 @@ function Movie(props) {
     // if I want to implemente fifo - linked list
 
     const handleClick = () => {
-        props.getDetails(props.movie);
-        // props.movieDetails(props.movie);
+
         props.history.push(`/app/movies/${props.movie.id}`);
     }
 
@@ -31,4 +30,4 @@ function Movie(props) {
     )
 }
 
-export default Movie;
+export default MovieCard;

@@ -1,17 +1,19 @@
 import React from 'react';
 import Home from './Home';
 import Error from './Error';
-import { BrowserRouter as Router, Switch, Link, Redirect} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Redirect} from 'react-router-dom';
 import Route from 'react-router-dom/Route';
 import SignupForm from './auth/SignupForm';
 import MoviesList from './MoviesList';
 import MovieDetails from './MovieDetails';
+import Header from './Header';
 
 class App extends React.Component {
  
   state = {
-    isLoggedIn: true,
+    isLoggedIn: false,
     detailedMovie: [],
+    userInformation: {}
   }
 
   componentDidMount() {
@@ -23,8 +25,12 @@ class App extends React.Component {
     this.setState({isLoggedIn: true});
   }
 
-  getDetails = (detailedMovie) => {
-    this.setState({...this.state, detailedMovie});
+  getMovieDetails = (detailedMovie) => {
+    this.setState({...this.state.detailedMovie, detailedMovie});
+  }
+
+  getUserDetails = (userId, username) => {
+    this.setState({...this.stateuserInformation, userInformation: {userId, username}});
   }
 
   render() {
@@ -32,18 +38,25 @@ class App extends React.Component {
         <div>
             <Router>
                 <div>
-                    <Link to="/">Home</Link>
+                    <Header handleLogin={this.handleLogin} loggedInStatus={this.state.isLoggedIn} getUserDetails={this.getUserDetails}/>
                     <Switch>
                         {/* <Route path='/app/:appname' exact render={({match})=>(this.state.loggedIn ? ( <App params={match} />) : (< Redirect to='/' />))}/> */}
                         <Route path='/app/movies' exact render={ props => (
-                            <MoviesList {...props} loggedInStatus={this.state.isLoggedIn} getDetails={this.getDetails}/>
+                           this.state.isLoggedIn ?
+                           ( 
+                            <MoviesList {...props} 
+                              loggedInStatus={this.state.isLoggedIn} 
+                              getMovieDetails={this.getDetails}
+                            /> 
+                            )
+                            :
+                            (
+                              <Redirect to='/' />
+                            )
                         )} 
                         />
-                         {/* <Route path='/app/:appname' exact render={ props => (
-                           this.state.isLoggedIn ? ( <MoviesList {...props} loggedInStatus={this.state.isLoggedIn}/>) : ( <Redirect to="/" /> )
-                        )}  */}
                         <Route path='/' exact strict render={ props => (
-                             this.state.isLoggedIn ?(<Redirect to='app/movies' />) : (<Home  {...props} handleLogin={this.handleLogin} loggedInStatus={this.state.isLoggedIn}  />) 
+                             this.state.isLoggedIn ?(<Redirect to='app/movies' />) : (<Home  {...props} loggedInStatus={this.state.isLoggedIn}  />) 
                         )} 
                         />
                         <Route path='/signup' render={ props => (
@@ -51,7 +64,13 @@ class App extends React.Component {
                         )} 
                         />
                         <Route path='/app/movies/:movieId' render={ props => (
-                            <MovieDetails {...props} handleLogin={this.handleLogin} movieDetails={this.state.detailedMovie } />
+                           this.state.isLoggedIn ? (
+                              <MovieDetails {...props} 
+                                handleLogin={this.handleLogin} 
+                                movieDetails={this.state.detailedMovie } 
+                                userInformation={this.state.userInformation}
+                                />
+                            ) : ( <Redirect to='/' />)
                         )} 
                         />
                         <Route component={Error} />

@@ -1,13 +1,9 @@
 import React from 'react'
-import {Link} from 'react-router-dom';
-import LoginForm from './auth/LoginForm';
 
 function Home(props) {
 
     return (
             <div>
-                <LoginForm {...props} loggedInStatus={props.loggedInStatus}/>
-                <Link to="/signup">SignUp</Link>
                 <h1>Landing Page</h1>
             </div>
  

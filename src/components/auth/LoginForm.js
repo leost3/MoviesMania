@@ -21,8 +21,8 @@ class LoginForm extends React.Component {
     }
 
     handleSubmit = (e) => {
+      console.log('form submitted')
       e.preventDefault();
-      console.log('form submited');
       const config = {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       };
@@ -36,10 +36,12 @@ class LoginForm extends React.Component {
         config
       )
       .then( response => {
-        if (response.data.isLoggedIn) {
-          this.props.handleLogin(response.data);
+        // console.log(response);
+        if (response.data.result.isLoggedIn) {
+          this.props.handleLogin(true);
+          this.props.getUserDetails(response.data.result.userId,response.data.result.username);
           localStorage.setItem("loggedIn", true);
-          this.props.history.push(`app/${this.state.username}`);
+          // this.props.history.push(`app/${this.state.username}`);
         } 
       })
       .catch( error => {
@@ -48,13 +50,26 @@ class LoginForm extends React.Component {
     }
 
     renderForm = () => {
-      console.log('loggedin props', this.props.loggedInStatus)
+      // console.log('loggedin props', this.props.loggedInStatus)
       if (!this.props.loggedInStatus) {
         return (
           <div>
               <form onSubmit={this.handleSubmit}>
-                  <input className="" value={this.state.username} placeholder="username" type="text" onChange={this.handleUsernameInput}/>
-                  <input className="" value={this.state.password} placeholder="password" type="text" onChange={this.handlePasswordInput}/>
+                  <input 
+                    className="" 
+                    value={this.state.username} 
+                    placeholder="username" 
+                    type="text" 
+                    onChange={this.handleUsernameInput}
+                    // onTouchMove={this.mouseLeave}
+                    
+                  />
+                  <input 
+                    className="" 
+                    value={this.state.password} 
+                    placeholder="password" 
+                    type="text" 
+                    onChange={this.handlePasswordInput}/>
                   <button type="submit"> Login </button>
               </form>
           </div>
