@@ -1,5 +1,4 @@
 import React from 'react'
-import {Link} from 'react-router-dom';
 import axios from 'axios';
 import MovieCard from './MovieCard';
 
@@ -54,6 +53,10 @@ class MoviesList extends React.Component{
     //   });
     // }
 
+
+    
+
+    //This function is shared between MoviesList and MovieDetails components
 
     getMovieGeneralRatingFromDb = () => {
       const config = {

@@ -2,10 +2,8 @@ import React from 'react'
 
 class Buttons extends React.Component {
 
-    state = {movieRating: []}
 
     rateMovie = (e) => {
-        console.log(this.props)
         const movieRating = e.target.value;
         this.props.setMovieRating(movieRating);
         // console.log(movieRating)

@@ -18,7 +18,8 @@ class App extends React.Component {
 
   componentDidMount() {
     const isLoggedIn = (localStorage.getItem('loggedIn') === 'true' ? true : false);
-    this.setState({isLoggedIn});  
+    this.setState({isLoggedIn}); 
+    this.getUserDetails(); 
   }
 
   handleLogin = () => {
@@ -26,10 +27,13 @@ class App extends React.Component {
   }
 
   getMovieDetails = (detailedMovie) => {
+
     this.setState({...this.state.detailedMovie, detailedMovie});
   }
 
-  getUserDetails = (userId, username) => {
+  getUserDetails = () => {
+    const userId = localStorage.getItem("userId");
+    const username = localStorage.getItem("username");
     this.setState({...this.stateuserInformation, userInformation: {userId, username}});
   }
 
