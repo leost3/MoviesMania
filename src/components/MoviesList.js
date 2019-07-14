@@ -26,57 +26,57 @@ class MoviesList extends React.Component{
         this.setState({...this.state, moviesList:data.results});
     }
 
-    // saveMoviesInDB = () => {
-    //     const moviesObj = [];
-    //     this.state.moviesList.map(movie => {
-    //       moviesObj.push({
-    //           "id" :movie.id,
-    //           "title" :movie.title,
-    //       })
-    //     });
+    saveMoviesInDB = () => {
+        const moviesObj = [];
+        this.state.moviesList.map(movie => {
+          moviesObj.push({
+              "id" :movie.id,
+              "title" :movie.title,
+          })
+        });
 
-    //   const config = {
-    //     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    //   };
-    //   axios.post(
-    //     'http://localhost:8181/shoppingprojectphp/api/postDb.php',
-    //     {
-    //       moviesInfo: moviesObj
-    //     },
-    //     config
-    //   )
-    //   .then( response => {
-    //     console.log("resp", response) 
-    //   })
-    //   .catch( error => {
-    //     console.log(error);
-    //   });
-    // }
+      const config = {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      };
+      axios.post(
+        'http://localhost:8181/shoppingprojectphp/api/postDb.php',
+        {
+          moviesInfo: moviesObj
+        },
+        config
+      )
+      .then( response => {
+        console.log("resp", response) 
+      })
+      .catch( error => {
+        console.log(error);
+      });
+    }
 
 
     
 
     //This function is shared between MoviesList and MovieDetails components
 
-    getMovieGeneralRatingFromDb = () => {
-      const config = {
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-      };
-      axios.post(
-        'http://localhost:8181/shoppingprojectphp/api/movies.php',
-        {
-          "action": "getGeneralRatings"
-        },
-        config
-      )
-      .then( response => {
-        // console.log("resp", response.data);
-        this.setState({...this.state.moviesRatings, moviesRatings:response.data});
-      })
-      .catch( error => {
-        console.log(error);
-      });
-    }
+    // getMovieGeneralRatingFromDb = () => {
+    //   const config = {
+    //     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    //   };
+    //   axios.post(
+    //     'http://localhost:8181/shoppingprojectphp/api/movies.php',
+    //     {
+    //       "action": "getGeneralRatings"
+    //     },
+    //     config
+    //   )
+    //   .then( response => {
+    //     // console.log("resp", response.data);
+    //     this.setState({...this.state.moviesRatings, moviesRatings:response.data});
+    //   })
+    //   .catch( error => {
+    //     console.log(error);
+    //   });
+    // }
 
     renderMovies = () => {
         // render movie list
@@ -107,7 +107,7 @@ class MoviesList extends React.Component{
     render() {
         return (
             <div>
-                <button onClick={this.getMovieGeneralRatingFromDb}>sendToDB</button>
+                {/* <button onClick={this.saveMoviesInDB}>sendToDB</button> */}
                 User Status:  {this.props.loggedInStatus ? "Logged in" : "Logged Out"}
                 {this.renderMovies()}
             </div>

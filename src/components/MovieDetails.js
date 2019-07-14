@@ -11,7 +11,7 @@ class Movie extends React.Component {
         movieDetails: {},
         userRating: null,
         userInfo: [],
-        movieRating: []
+        movieRating: {}
     }
 
     async componentDidMount() {
@@ -46,7 +46,7 @@ class Movie extends React.Component {
         )
         .then( response => {
             console.log(response.data)
-        //   this.setState({...this.state.movieRating, movieRating:response.data.result});
+            this.setState({...this.state.movieRating, movieRating:response.data.result});
         })
         .catch( error => {
           console.log(error);
@@ -64,11 +64,14 @@ class Movie extends React.Component {
             "action": "getRatings",
             // "action": "getGeneralRatings",
             "movieId": this.state.movieDetails.id,
+            "userId": this.state.userInfo.userId,
+
           },
           config
         )
         .then( response => {
-          this.setState({...this.state.movieRating, movieRating:response.data.result});
+          // console.log(response);
+          this.setState({...this.state, movieRating: response.data.result[0]});
         })
         .catch( error => {
           console.log(error);
@@ -89,7 +92,9 @@ class Movie extends React.Component {
         for (let i=0;i<=10;i++) {
             btns.push(
             <Buttons
-                setMovieRating={this.setMovieRating} i={i} 
+                setMovieRating={this.setMovieRating} 
+                hasUserRated={this.state.movieRating !== undefined ? true : false } 
+                i={i} 
             />)
         }
         return (
@@ -98,6 +103,7 @@ class Movie extends React.Component {
     }
 
     render() {
+      console.log(this.state.movieRating);
         const size = { 
             0: "w92",
             1: "w154",
@@ -107,19 +113,19 @@ class Movie extends React.Component {
             5: "w780",
             6: "original"
         };
-        const {title, overview, release_date, vote_average, poster_path} = this.state.movieDetails;
-        // console.log(this.state.movieRating.length, this.state.movieRating.length === true)
-        console.log(this.state.movieRating)
+        const {id, title, overview, release_date, vote_average, poster_path} = this.state.movieDetails;
         if (this.state.movieDetails) {
             return (
                 <div>
                     <img src={`http://image.tmdb.org/t/p/${size[3]}/${poster_path}`} alt={title} />
                     <button onClick={this.getMovieGeneralRatingFromDb} >GetRate</button>
                     <h1>{title}</h1>
+                    <p>id: {id}</p>
                     <p>Overview: {overview}</p>
                     <h1>Release Date:{release_date}</h1>
-                    <h1>Grade: { this.state.movieRating.length ? this.state.movieRating[0].avg_rating : "null"}</h1>
-                    <h1>Total Votes: {this.state.movieRating.length ? this.state.movieRating[0].num_of_rating : 'null'}</h1>
+                    <h1>Your Grade: {this.state.movieRating !== undefined ? this.state.movieRating.movie_rating : "Not voted"}</h1>
+                    {/* <h1>General Grade: { this.state.movieRating.length ? this.state.movieRating[0].avg_rating : "null"}</h1>
+                    <h1>Total Votes: {this.state.movieRating.length ? this.state.movieRating[0].num_of_rating : 'null'}</h1> */}
                     {this.displayVotingBtns()}
                 </div>
     
