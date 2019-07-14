@@ -46,7 +46,8 @@ class Movie extends React.Component {
         )
         .then( response => {
             console.log(response.data)
-            this.setState({...this.state.movieRating, movieRating:response.data.result});
+            this.setState({...this.state.movieRating, movieRating:response.data.result[0]});
+            console.log(this.state.movieRating);
         })
         .catch( error => {
           console.log(error);
@@ -84,6 +85,7 @@ class Movie extends React.Component {
 
     setMovieRating = (rate) => {
         this.setState({userRating:parseInt(rate)});
+        // this.setState({...this.state, movieRating: {"movie_rating":  rate}});
         this.sendUserRating();
     }
 
@@ -103,7 +105,7 @@ class Movie extends React.Component {
     }
 
     render() {
-      console.log(this.state.movieRating);
+      // console.log(this.state);
         const size = { 
             0: "w92",
             1: "w154",
