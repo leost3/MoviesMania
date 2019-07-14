@@ -9,9 +9,10 @@ import Buttons from './Buttons';
 class Movie extends React.Component {
     state = {
         movieDetails: {},
-        userRating: null,
+        // userRating: null,
         userInfo: [],
-        movieRating: {}
+        movieRating: {},
+        movieRateAvg: null,
     }
 
     async componentDidMount() {
@@ -25,11 +26,14 @@ class Movie extends React.Component {
         // const configResp = await axios(getConfig);
         const movieDetails = response.data;
         this.setState({...this.state.movieDetails, movieDetails});
+        console.log(this.props.userInformation);
         this.setStateUsersInfo(this.props.userInformation);
+        this.getMovieAvg();
         this.getMovieGeneralRatingFromDb();
     }
 
-    sendUserRating = () => {
+    sendUserRating = (rate) => {
+      console.log(this.state.movieDetails.id,this.state.userInfo.userId, this.state.userRating);
         const config = {
           headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         };
@@ -40,19 +44,38 @@ class Movie extends React.Component {
             // "action": "getGeneralRatings",
             "movieId": this.state.movieDetails.id,
             "userId": this.state.userInfo.userId,
-            "userRate": this.state.userRating,
+            "userRate": rate,
           },
           config
         )
         .then( response => {
-            console.log(response.data)
             this.setState({...this.state.movieRating, movieRating:response.data.result[0]});
-            console.log(this.state.movieRating);
+            this.getMovieAvg();
         })
         .catch( error => {
           console.log(error);
         });
       }
+
+    getMovieAvg = () => {
+      const config = {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      };
+      axios.post(
+        'http://localhost:8181/shoppingprojectphp/api/movies.php',
+        {
+          "action": "getAvg",
+          "movieId": this.state.movieDetails.id,
+        },
+        config
+      )
+      .then( response => {
+        this.setState({movieRateAvg: parseFloat(response.data.result['AVG(movie_rating)'])});
+      })
+      .catch( error => {
+        console.log(error);
+      });
+    }
 
 
     getMovieGeneralRatingFromDb = () => {
@@ -63,15 +86,12 @@ class Movie extends React.Component {
           'http://localhost:8181/shoppingprojectphp/api/movies.php',
           {
             "action": "getRatings",
-            // "action": "getGeneralRatings",
             "movieId": this.state.movieDetails.id,
             "userId": this.state.userInfo.userId,
-
           },
           config
         )
         .then( response => {
-          // console.log(response);
           this.setState({...this.state, movieRating: response.data.result[0]});
         })
         .catch( error => {
@@ -84,9 +104,9 @@ class Movie extends React.Component {
     }
 
     setMovieRating = (rate) => {
-        this.setState({userRating:parseInt(rate)});
+        // this.setState({userRating:parseInt(rate)});
         // this.setState({...this.state, movieRating: {"movie_rating":  rate}});
-        this.sendUserRating();
+        this.sendUserRating(parseInt(rate));
     }
 
     displayVotingBtns = () => {
@@ -105,7 +125,6 @@ class Movie extends React.Component {
     }
 
     render() {
-      // console.log(this.state);
         const size = { 
             0: "w92",
             1: "w154",
@@ -120,14 +139,14 @@ class Movie extends React.Component {
             return (
                 <div>
                     <img src={`http://image.tmdb.org/t/p/${size[3]}/${poster_path}`} alt={title} />
-                    <button onClick={this.getMovieGeneralRatingFromDb} >GetRate</button>
+                    {/* <button onClick={this.getMovieAvg} >GetRate</button> */}
                     <h1>{title}</h1>
                     <p>id: {id}</p>
                     <p>Overview: {overview}</p>
                     <h1>Release Date:{release_date}</h1>
                     <h1>Your Grade: {this.state.movieRating !== undefined ? this.state.movieRating.movie_rating : "Not voted"}</h1>
-                    {/* <h1>General Grade: { this.state.movieRating.length ? this.state.movieRating[0].avg_rating : "null"}</h1>
-                    <h1>Total Votes: {this.state.movieRating.length ? this.state.movieRating[0].num_of_rating : 'null'}</h1> */}
+                    <h1>General Grade: { (this.state.movieRateAvg) ? (this.state.movieRateAvg) : "No votes Yet"}</h1>
+                    {/* <h1>Total Votes: {this.state.movieRating.length ? this.state.movieRating[0].num_of_rating : 'null'}</h1> */}
                     {this.displayVotingBtns()}
                 </div>
     

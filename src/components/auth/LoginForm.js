@@ -42,10 +42,12 @@ class LoginForm extends React.Component {
         // console.log(response);
         if (response.data.result.isLoggedIn) {
           this.props.handleLogin(true);
-          // this.props.getUserDetails(response.data.result.userId,response.data.result.username);
           localStorage.setItem("loggedIn", true);
           localStorage.setItem("userId", response.data.result.userId);
           localStorage.setItem("username", response.data.result.username);
+          console.log(localStorage)
+          this.props.getUserDetails();
+          // this.props.getUserDetails(response.data.result.userId,response.data.result.username);
           // this.props.history.push(`app/${this.state.username}`);
         } 
       })
