@@ -35,7 +35,6 @@ class App extends React.Component {
     const userId = localStorage.getItem("userId");
     const username = localStorage.getItem("username");
     this.setState({userInformation: {userId, username}});
-
   }
 
   render() {
