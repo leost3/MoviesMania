@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios';
 import MovieCard from './MovieCard';
-
+import LoginForm from './auth/LoginForm';
 class MoviesList extends React.Component{
 // APIKEYIMDB = 7605e85c
 // APIKEYTMDB = f94e9a18c1c262bae36e6cdc7be57a1d
@@ -115,6 +115,7 @@ class MoviesList extends React.Component{
     render() {
         return (
             <div className="moviesListPage">
+                <LoginForm loggedInStatus={this.props.loggedInStatus} />
                 <input type='text'
                     onChange={this.handleChange}
                     value={this.state.term}

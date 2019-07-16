@@ -1,7 +1,6 @@
 import React from 'react';
 
 function MovieCard(props) {
-    console.log(props.movie)
     const size = { 
         0: "w92",
         1: "w154",

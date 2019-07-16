@@ -68,7 +68,6 @@ class LoginForm extends React.Component {
                     type="text" 
                     onChange={this.handleUsernameInput}
                     // onTouchMove={this.mouseLeave}
-                    
                   />
                   <input 
                     className="" 
@@ -84,7 +83,8 @@ class LoginForm extends React.Component {
       return (
         <div>
               <form onSubmit={this.handleLogOut}>
-                  <button type="submit"> Logout </button>
+                  <h1>Welcome: {this.state.username}</h1>
+                  <button type="submit">  Logout </button>
               </form>
           </div>
       )
@@ -110,4 +110,4 @@ class LoginForm extends React.Component {
     }
 }
 
-export default LoginForm
+export default LoginForm;

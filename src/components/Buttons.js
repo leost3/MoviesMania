@@ -24,7 +24,7 @@ class Buttons extends React.Component {
     renderBtn = () => {
         
         if (this.props.hasUserRated) {
-            return <button  disabled onClick={this.rateMovie} value={this.props.i}>{this.props.i}</button>;
+            return <button  disabled onClick={this.rateMovie} key={this.props.i} value={this.props.i}>{this.props.i}</button>;
         }
         return <button  onClick={this.rateMovie} value={this.props.i}>{this.props.i}</button>;
     }

@@ -1,8 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import Buttons from './Buttons';
-// import { Link } from 'react-router-dom';
-
+import { Link } from 'react-router-dom';
+import MovieVideo from './MovieVIdeo';
+import  youtube  from '../api/youtube';
 
 
 
@@ -13,6 +14,7 @@ class Movie extends React.Component {
         userInfo: [],
         movieRating: {},
         movieRateAvg: null,
+        youTubeVideo: [],
     }
 
     async componentDidMount() {
@@ -29,7 +31,20 @@ class Movie extends React.Component {
         this.setStateUsersInfo(this.props.userInformation);
         this.getMovieAvg();
         this.getMovieGeneralRatingFromDb();
+        this.onTermSubmit("buildings");
     }
+
+    onTermSubmit = async term => {
+      
+      const response = await youtube.get("/search", {
+        params: {
+          q: term
+        }
+      });
+      this.setState({
+        youTubeVideo: response.data.items[0]
+      });
+    };
 
     sendUserRating = (rate) => {
         const config = {
@@ -115,6 +130,7 @@ class Movie extends React.Component {
                 setMovieRating={this.setMovieRating} 
                 hasUserRated={this.state.movieRating !== undefined ? true : false } 
                 i={i} 
+                key={i} 
             />)
         }
         return (
@@ -161,10 +177,12 @@ class Movie extends React.Component {
             5: "w780",
             6: "original"
         };
-        const {id, title, overview, release_date, vote_average, poster_path, backdrop_path} = this.state.movieDetails;
+        console.log(this.state.youTubeVideo);
+        const {id, title, overview, release_date, poster_path, backdrop_path} = this.state.movieDetails;
         if (this.state.movieDetails) {
             return (
                 <div className="movieDetails_page">
+                  <Link to="/"> Back </Link>
                   <div>
                     <img className="moviePoster" src={`http://image.tmdb.org/t/p/${size[6]}/${backdrop_path}`} alt={title} />
                   </div>
@@ -177,10 +195,10 @@ class Movie extends React.Component {
                     </div>
                     <div className="movieRatings">
                       <div>
-                        <h1>Your Grade:</h1> {this.renderRadialProgressBarUser()}
+                        <h1>Your Rating:</h1> {this.renderRadialProgressBarUser()}
                       </div>
                       <div>
-                        <h1>User Grade:</h1> {this.renderRadialProgressBarGeneral()}
+                        <h1>Users average Rating:</h1> {this.renderRadialProgressBarGeneral()}
                         {/* <h1>General Grade: { (this.state.movieRateAvg) ? (this.state.movieRateAvg) : "No users has votes yet"}</h1> */}
                       </div>
                       {/* <h1>Your Grade: {this.state.movieRating !== undefined ? this.state.movieRating.movie_rating : "Not voted"}</h1> */}
@@ -188,6 +206,9 @@ class Movie extends React.Component {
                     </div>
                     <div className="votingBtns">
                       {this.displayVotingBtns()}
+                    </div>
+                    <div className="movieVideo">
+                      <MovieVideo />
                     </div>
                 </div>
     
