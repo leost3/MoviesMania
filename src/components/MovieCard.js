@@ -14,7 +14,6 @@ function MovieCard(props) {
     // if I want to implemente fifo - linked list
 
     const handleClick = () => {
-
         props.history.push(`/app/movies/${props.movie.id}`);
     }
 

@@ -35,14 +35,13 @@ class Movie extends React.Component {
     }
 
     onTermSubmit = async term => {
-      
       const response = await youtube.get("/search", {
         params: {
           q: term
         }
       });
       this.setState({
-        youTubeVideo: response.data.items[0]
+        youTubeVideo: response.data.items[0],
       });
     };
 
@@ -177,7 +176,7 @@ class Movie extends React.Component {
             5: "w780",
             6: "original"
         };
-        console.log(this.state.youTubeVideo);
+        // console.log(this.state.youTubeVideo);
         const {id, title, overview, release_date, poster_path, backdrop_path} = this.state.movieDetails;
         if (this.state.movieDetails) {
             return (
@@ -208,7 +207,7 @@ class Movie extends React.Component {
                       {this.displayVotingBtns()}
                     </div>
                     <div className="movieVideo">
-                      <MovieVideo />
+                      <MovieVideo onTermSubmit={this.onTermSubmit} video={this.state.youTubeVideo} />
                     </div>
                 </div>
     
