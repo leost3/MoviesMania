@@ -1,7 +1,7 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
 
 function MovieCard(props) {
+    // console.log(props)
     const size = { 
         0: "w92",
         1: "w154",
@@ -12,7 +12,6 @@ function MovieCard(props) {
         6: "original"
     };
     
-
     // if I want to implemente fifo - linked list
 
     const handleClick = () => {
@@ -21,7 +20,7 @@ function MovieCard(props) {
     }
 
     return (
-        <div>
+        <div className="movieCard" >
             {/* <Link to={`/app/username/${props.movie.title}`}> */}
                 <img src={`http://image.tmdb.org/t/p/${size[3]}/${props.movie.poster_path}`} alt={props.movie.title} onClick={handleClick} />
                 <h4>{props.movie.title}</h4>

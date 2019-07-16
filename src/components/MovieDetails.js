@@ -122,6 +122,22 @@ class Movie extends React.Component {
         )
     }
 
+    renderRadialProgressBar = () => {
+      if (this.state.movieRating !== undefined) {
+        return (
+          <div className="pie-wrapper progress-half">
+            <span className="label">{this.state.movieRating.movie_rating}<em></em></span>
+            <div className="pie">
+              <div className="left-side half-circle"></div>
+              <div className="right-side half-circle"></div>
+            </div>  
+          </div>
+
+        )
+      }
+      return "Not voted";
+    }
+
     render() {
         const size = { 
             0: "w92",
@@ -142,8 +158,9 @@ class Movie extends React.Component {
                     <p>id: {id}</p>
                     <p>Overview: {overview}</p>
                     <h1>Release Date:{release_date}</h1>
-                    <h1>Your Grade: {this.state.movieRating !== undefined ? this.state.movieRating.movie_rating : "Not voted"}</h1>
-                    <h1>General Grade: { (this.state.movieRateAvg) ? (this.state.movieRateAvg) : "npm"}</h1>
+                    <h1>Your Grade:</h1> {this.renderRadialProgressBar()}
+                    {/* <h1>Your Grade: {this.state.movieRating !== undefined ? this.state.movieRating.movie_rating : "Not voted"}</h1> */}
+                    <h1>General Grade: { (this.state.movieRateAvg) ? (this.state.movieRateAvg) : "No users has votes yet"}</h1>
                     {/* <h1>Total Votes: {this.state.movieRating.length ? this.state.movieRating[0].num_of_rating : 'null'}</h1> */}
                     {this.displayVotingBtns()}
                 </div>

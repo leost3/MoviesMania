@@ -8,7 +8,9 @@ class MoviesList extends React.Component{
 // API Access Token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmOTRlOWExOGMxYzI2MmJhZTM2ZTZjZGM3YmU1N2ExZCIsInN1YiI6IjVkMjI0OTQ3NmQ0Yzk3MDAwZDc2NjMyYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.TnzHZaKOanrHPi6dIiIBeHjGtij20Cjdv1aHbl6zdq8
     state = {
         moviesList:[],
+        filterMovies: [],
         moviesRatings: [],
+        term: '',
     }
     
     async componentDidMount() {
@@ -59,6 +61,16 @@ class MoviesList extends React.Component{
 
     //This function is shared between MoviesList and MovieDetails components
 
+    handleChange = (e) => {
+        this.setState({term:e.target.value});
+    }
+
+    filterMovies = () => {
+        return this.state.moviesList.filter(movie => {
+            return movie.title.toLowerCase().includes(this.state.term.toLowerCase());
+        })
+    }
+    // Get all ratings of customers
     getMovieGeneralRatingFromDb = () => {
       const config = {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -80,18 +92,14 @@ class MoviesList extends React.Component{
     }
 
     renderMovies = () => {
-        // render movie list
         if (this.state.moviesList.length) {
             return (
-                this.state.moviesList.map(movie => (
-                    <div key={movie.id} alt={movie.title}  >
-                        <h1><MovieCard  
-                            {...this.props} 
-                            movie={movie} 
-                            getDetails={this.props.getDetails} 
-                            />
-                        </h1>
-                    </div>
+                this.filterMovies().map(movie => (
+                    <MovieCard  
+                        {...this.props} 
+                        movie={movie} 
+                        getDetails={this.props.getDetails} 
+                    />
                 ))
             )
         }
@@ -106,12 +114,18 @@ class MoviesList extends React.Component{
     }
 
     render() {
-        console.log(this.state)
         return (
             <div>
-                {/* <button onClick={this.saveMoviesInDB}>sendToDB</button> */}
-                User Status:  {this.props.loggedInStatus ? "Logged in" : "Logged Out"}
-                {this.renderMovies()}
+                <input type='text'
+                    onChange={this.handleChange}
+                    value={this.state.term}
+                />
+                <div className="moviesList">
+                    {/* <button onClick={this.saveMoviesInDB}>sendToDB</button> */}
+                    {/* User Status:  {this.props.loggedInStatus ? "Logged in" : "Logged Out"} */}
+                    {this.renderMovies()}
+                </div>
+
             </div>
         )
     }

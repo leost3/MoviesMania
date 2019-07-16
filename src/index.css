@@ -82,3 +82,182 @@ svg {
   }
 }
 
+
+/* PROGESS BAR */
+
+@import url(https://fonts.googleapis.com/css?family=Lato:700);
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background: #ecf0f1;
+  color: #444;
+  font-family: 'Lato', Tahoma, Geneva, sans-serif;
+  font-size: 16px;
+  padding: 10px;
+}
+
+.set-size {
+  font-size: 10em;
+}
+.pie-wrapper {display:inline-block;position:relative;display:inline-block;width:200px;height:200px;margin:10px;border:10px  solid #ddd;border-radius:50%}
+.pie-wrapper .pie {clip:rect(0,200px,200px,100px);height:200px;position:absolute;width:200px;margin:-10px 0 0 -10px}
+.pie-wrapper .pie .half-circle {border:10px solid #3498db;clip:rect(0,100px,200px,0);height:200px;position:absolute;width:200px;border-radius:50%}
+.pie-wrapper .label{position:absolute;top:5%;left:5%;display:block;width:180px;height:180px;color:#7f8c8d;cursor:default;font-size:3em;line-height:3em;text-align:center;border-radius:50%}
+.pie-wrapper .label em {padding-bottom:20px;color:#bdc3c7;font-size:.45em;vertical-align:super;font-style:normal}
+.pie-wrapper .shadow {width:100%;height:100%;border:20px solid #bdc3c7;border-radius: 50%}
+.pie-wrapper.progress-half .pie .right-side {display: none}
+.pie-wrapper.progress-half .pie .half-circle {border-style:solid;border-image:-webkit-linear-graident(#ff0000, #ffff00)}
+.pie-wrapper.progress-half .pie .left-side,.pie-wrapper.progress-full .pie .left-side {-webkit-transform: rotate(165deg);-moz-transform: rotate(165deg);transform: rotate(165deg)}
+.pie-wrapper.progress-full .pie .left-side{-webkit-transform: rotate(180deg);-moz-transform: rotate(180deg);transform: rotate(180deg)}
+.pie-wrapper.progress-full .pie{clip:inherit}
+.pie-wrapper.progress-full .pie .right-side {display:block}
+.pie-wrapper.progress-full .pie .right-side{-webkit-transform: rotate(300deg);-moz-transform: rotate(300deg);transform: rotate(300deg)}
+div,div:before,div:after {-moz-box-sizing: border-box;-webkit-box-sizing: border-box;box-sizing: border-box}
+html,body {background: #ecf0f1;  color: #444;font-family: Tahoma, Geneva, sans-serif;font-size: 16px}
+
+
+/* SLIDER */
+
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+* {
+  box-sizing: border-box;
+  margin: 0%;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #333;
+  color: #fff;
+  line-height: 1.6
+}
+
+
+.slider {
+  position: relative;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.slide.current {
+  opacity: 1;
+}
+
+.slide:first-child {
+  background: url("http://image.tmdb.org/t/p/w780/xRWht48C2V8XNfzvPehyClOvDni.jpg") no-repeat center center/cover;
+} 
+.slide:nth-child(2) {
+  background: url("http://image.tmdb.org/t/p/w780/9HyNgy6xYikHRP3veDN26AwCLsB.jpg") no-repeat center top/cover;
+} 
+.slide:nth-child(3) {
+  background: url("http://image.tmdb.org/t/p/w780/xnopI5Xtky18MPhK40cZAGAOVeV.jpg") no-repeat center top/cover;
+} 
+.slide:nth-child(4) {
+  background: url("http://image.tmdb.org/t/p/bk8LyaMqUtaQ9hUShuvFznQYQKR.jpg") no-repeat center top/cover;
+} 
+.slide:nth-child(5) {
+  background: url("http://image.tmdb.org/t/p/w780/rjbNpRMoVvqHmhmksbokcyCr7wn.jpg") no-repeat center top/cover;
+} 
+.slide:nth-child(6) {
+  background: url("http://image.tmdb.org/t/p/w780/AtsgWhDnHTq68L0lLsUrCnM7TjG.jpg") no-repeat center top/cover;
+} 
+
+.slide .content {
+  position: absolute;
+  bottom: 70px;
+  left: -600px;
+  opacity: 0;
+  width: -600px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #333;
+  padding: 35px;
+}
+
+.slider .content h1 {
+  margin-bottom: 10px;
+}
+
+.slide.current .content {
+  opacity: 1;
+  transform: translateX(600px);
+  transition: all 0.7s ease-in-out 0.3s;
+}
+
+.buttons button#next {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+}
+.buttons button#prev {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+}
+
+.buttons button {
+  border: 2px solid #fff;
+  background-color: transparent;
+  color: #fff;
+  cursor: pointer;
+  padding: 13px 15px;
+  border-radius: 50%;
+  outline: none;
+}
+
+.buttons button:hover {
+  background-color: #fff;
+  color: #333;
+}
+
+@media(max-width: 500px) {
+  .slide .content {
+    bottom: -300px;
+    left: 0;
+    width: 100%
+  }
+
+  .slide.current .content {
+    transform: translateY(-300px);
+  }
+}
+.header {
+  background: white;
+  z-index: 1;
+}
+
+.home {
+  background: orangered;
+}
+
+
+
+/* MovieList */
+
+.moviesList {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+.movieCard {
+  background: greenyellow;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

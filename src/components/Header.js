@@ -14,7 +14,7 @@ function Header(props) {
     }
 
     return (
-        <div>
+        <div className='header'>
             {renderSignUpComponent()}
             <Link to="/">Home</Link>
             <LoginForm {...props} handleLogin={props.handleLogin} getUserDetails={props.getUserDetails} loggedInStatus={props.loggedInStatus}/>
