@@ -98,7 +98,6 @@ class MoviesList extends React.Component{
                     <MovieCard  
                         {...this.props} 
                         movie={movie} 
-                        getDetails={this.props.getDetails} 
                     />
                 ))
             )
@@ -115,7 +114,7 @@ class MoviesList extends React.Component{
 
     render() {
         return (
-            <div>
+            <div className="moviesListPage">
                 <input type='text'
                     onChange={this.handleChange}
                     value={this.state.term}

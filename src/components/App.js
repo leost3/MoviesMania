@@ -42,25 +42,26 @@ class App extends React.Component {
         <div>
             <Router>
                 <div>
-                    <Header handleLogin={this.handleLogin} loggedInStatus={this.state.isLoggedIn} getUserDetails={this.getUserDetails}/>
                     <Switch>
                         {/* <Route path='/app/:appname' exact render={({match})=>(this.state.loggedIn ? ( <App params={match} />) : (< Redirect to='/' />))}/> */}
                         <Route path='/app/movies' exact render={ props => (
-                           this.state.isLoggedIn ?
-                           ( 
+                          this.state.isLoggedIn ?
+                          ( 
                             <MoviesList {...props} 
-                              loggedInStatus={this.state.isLoggedIn} 
-                              getMovieDetails={this.getDetails}
+                            loggedInStatus={this.state.isLoggedIn} 
+                            getMovieDetails={this.getDetails}
                             /> 
                             )
                             :
                             (
                               <Redirect to='/' />
-                            )
-                        )} 
+                              )
+                              )} 
                         />
                         <Route path='/' exact strict render={ props => (
-                             this.state.isLoggedIn ?(<Redirect to='app/movies' />) : (<Home  {...props} loggedInStatus={this.state.isLoggedIn}  />) 
+                          this.state.isLoggedIn ?(<Redirect to='app/movies' />) : (<Home  {...props} loggedInStatus={this.state.isLoggedIn}  />,
+                            <Header handleLogin={this.handleLogin} loggedInStatus={this.state.isLoggedIn} getUserDetails={this.getUserDetails}/>) 
+                          
                         )} 
                         />
                         <Route path='/signup' render={ props => (

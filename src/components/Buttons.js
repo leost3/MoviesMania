@@ -32,7 +32,7 @@ class Buttons extends React.Component {
     render() {
         // console.log(this.state.hasUserRated)
         return (
-            <div disabled>
+            <div>
                 {this.renderBtn()}
             </div>
         )
