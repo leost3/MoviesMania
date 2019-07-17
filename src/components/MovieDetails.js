@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import Buttons from './Buttons';
 import { Link } from 'react-router-dom';
-import MovieVideo from './MovieVIdeo';
 import youtube from '../api/youtube';
 
 class Movie extends React.Component {
@@ -33,7 +32,30 @@ class Movie extends React.Component {
         this.onTermSubmit(this.state.movieDetails.title)
     }
 
-    
+    addToFavorites = () => {
+      console.log("Added to favorites")
+      const config = {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      };
+      axios.post(
+        'http://localhost:8181/shoppingprojectphp/api/movies.php',
+        {
+          "action": "addToFavorites",
+          // "action": "getGeneralRatings",
+          "movieId": this.state.movieDetails.id,
+          "movieTitle": this.state.movieDetails.title,
+          "poster_path": this.state.movieDetails.poster_path,
+          "userId": parseInt(this.state.userInfo.userId)
+        },
+        config
+      )
+      .then( response => {
+          console.log(response);
+      })
+      .catch( error => {
+        console.log(error);
+      });
+    }
 
     sendUserRating = (rate) => {
         const config = {
@@ -201,29 +223,37 @@ class Movie extends React.Component {
                 <div className="movieDetails_page">
                   <Link to="/"> Back </Link>
                   <div>
-                    <img className="moviePoster" src={`http://image.tmdb.org/t/p/${size[6]}/${backdrop_path}`} alt={title} />
+                       <img 
+                          className="moviePoster" 
+                          src={`http://image.tmdb.org/t/p/${size[6]}/${backdrop_path}`} 
+                          alt={title} 
+                       />
                   </div>
                     {/* <button onClick={this.getMovieAvg} >GetRate</button> */}
                     <div className="movieDescription">
-                      <h1>{title}</h1>
-                      <p>id: {id}</p>
-                      <p>Overview: {overview}</p>
-                      <h1>Release Date:{release_date}</h1>
+                        <h1>{title}</h1>
+                        <p>id: {id}</p>
+                        <p>Overview: {overview}</p>
+                        <h1>Release Date:{release_date}</h1>
+                    </div>
+                    <div className="btnFavorite">
+                        <button onClick={this.addToFavorites} > 
+                            Add to Favorites
+                        </button>
                     </div>
                     <div className="movieRatings">
-                      <div>
-                        <h1>Your Rating:</h1> {this.renderRadialProgressBarUser()}
-                      </div>
-                      <div>
-                        <h1>Users average Rating:</h1> {this.renderRadialProgressBarGeneral()}
-                      </div>
+                        <div>
+                            <h1>Your Rating:</h1> {this.renderRadialProgressBarUser()}
+                        </div>
+                        <div>
+                            <h1>Users average Rating:</h1> {this.renderRadialProgressBarGeneral()}
+                        </div>
                     </div>
                     <div className="votingBtns">
                       {this.displayVotingBtns()}
                     </div>
                     <div className="movieVideo">
                       {this.renderVideoFrame()}
-                      {/* <MovieVideo title={title} /> */}
                     </div>
 
                 </div>
