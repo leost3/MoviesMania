@@ -1,6 +1,6 @@
 import React from 'react';
 
-function MovieCard(props) {
+function MovieCard( props ) {
     const size = { 
         0: "w92",
         1: "w154",
@@ -16,7 +16,7 @@ function MovieCard(props) {
     const handleClick = () => {
         props.history.push(`/app/movies/${props.movie.id}`);
     }
-
+    
     return (
         <div className="movieCard" >
             {/* <Link to={`/app/username/${props.movie.title}`}> */}

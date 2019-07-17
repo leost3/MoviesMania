@@ -3,8 +3,7 @@ import axios from 'axios';
 import Buttons from './Buttons';
 import { Link } from 'react-router-dom';
 import MovieVideo from './MovieVIdeo';
-
-
+import youtube from '../api/youtube';
 
 class Movie extends React.Component {
     state = {
@@ -13,23 +12,25 @@ class Movie extends React.Component {
         userInfo: [],
         movieRating: {},
         movieRateAvg: null,
-        youTubeVideo: [],
+        youTubeVideo: {},
+
     }
 
     async componentDidMount() {
         const movieId = this.props.match.params.movieId;
 
         const KEY = 'f94e9a18c1c262bae36e6cdc7be57a1d';
-        // const getMovieById = `https://api.themoviedb.org/3/movie/550?api_key=${KEY}`;
+        // const getMovieById = `https://api.themoviedb.org/3/movie/${550}?api_key=${KEY}`;
         const getMovieDetails = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${KEY}`;
 
         const response = await axios(getMovieDetails);
         // const configResp = await axios(getConfig);
         const movieDetails = response.data;
         this.setState({...this.state.movieDetails, movieDetails});
-        this.setStateUsersInfo(this.props.userInformation);
+        this.setState({userInfo:this.props.userInformation});
         this.getMovieAvg();
         this.getMovieGeneralRatingFromDb();
+        this.onTermSubmit(this.state.movieDetails.title)
     }
 
     
@@ -100,13 +101,11 @@ class Movie extends React.Component {
         });
       }
 
-    setStateUsersInfo = (userInfo) => {
-        this.setState({...this.state.userInfo, userInfo});
-    }
+    // setStateUsersInfo = (userInfo) => {
+    //     this.setState({...this.state.userInfo, userInfo});
+    // }
 
     setMovieRating = (rate) => {
-        // this.setState({userRating:parseInt(rate)});
-        // this.setState({...this.state, movieRating: {"movie_rating":  rate}});
         this.sendUserRating(parseInt(rate));
     }
 
@@ -155,6 +154,36 @@ class Movie extends React.Component {
       return "Not voted";
     }
 
+    
+    onTermSubmit = async (term) => {
+      const response = await youtube.get("/search", {
+        params: {
+          q: term
+        }
+      });
+      this.setState({
+          ...this.state.youTubeVideo, youTubeVideo: response.data.items[0],
+      });
+    };
+
+    renderVideoFrame = () => {
+        if (this.state.youTubeVideo.id) {
+            return (
+                  <div>
+                      <div className="ui embed">
+                          <iframe title="video player" src={`https://www.youtube.com/embed/${this.state.youTubeVideo.id.videoId}`} />
+                      </div>
+                      <div className="ui segment">
+                          
+                      </div>
+                  </div>
+            )
+        }
+        return (
+            <h1>Loading</h1>
+        )
+    }
+
     render() {
         const size = { 
             0: "w92",
@@ -165,8 +194,8 @@ class Movie extends React.Component {
             5: "w780",
             6: "original"
         };
-        // console.log(this.state.youTubeVideo);
-        const {id, title, overview, release_date, poster_path, backdrop_path} = this.state.movieDetails;
+        const {id, title, overview, release_date, backdrop_path} = this.state.movieDetails;
+        // console.log(title);
         if (this.state.movieDetails) {
             return (
                 <div className="movieDetails_page">
@@ -187,17 +216,16 @@ class Movie extends React.Component {
                       </div>
                       <div>
                         <h1>Users average Rating:</h1> {this.renderRadialProgressBarGeneral()}
-                        {/* <h1>General Grade: { (this.state.movieRateAvg) ? (this.state.movieRateAvg) : "No users has votes yet"}</h1> */}
                       </div>
-                      {/* <h1>Your Grade: {this.state.movieRating !== undefined ? this.state.movieRating.movie_rating : "Not voted"}</h1> */}
-                      {/* <h1>Total Votes: {this.state.movieRating.length ? this.state.movieRating[0].num_of_rating : 'null'}</h1> */}
                     </div>
                     <div className="votingBtns">
                       {this.displayVotingBtns()}
                     </div>
                     <div className="movieVideo">
-                      <MovieVideo video={this.state.youTubeVideo} />
+                      {this.renderVideoFrame()}
+                      {/* <MovieVideo title={title} /> */}
                     </div>
+
                 </div>
     
             )

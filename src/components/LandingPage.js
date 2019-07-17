@@ -1,4 +1,5 @@
 import React from 'react'
+// import axios from 'axios';
 
 function Home() {
 
@@ -62,6 +63,11 @@ function Home() {
         slideInterval = setInterval(nextSlide, intervalTime);
     }
   
+    const renderSliders = () => {
+
+    }
+
+
     return (
         <div className="home">
             <div className="slider">

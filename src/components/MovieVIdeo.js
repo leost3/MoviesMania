@@ -1,28 +1,33 @@
 import React from 'react'
 import  youtube  from '../api/youtube';
+import { async } from 'q';
 
 class MovieVIdeo extends React.Component {
 
-
-    state = {youTubeVideo: []}
-
-    componentDidMount() {
-        this.onTermSubmit();
+    state = {
+        youTubeVideo: {},
+        movieTitle: ""
     }
 
-    onTermSubmit = async () => {
+    componentDidMount() {
+        console.log("component mounted");
+        this.setState({movieTitle: "goku"})
+        this.onTermSubmit(this.props.title);
+    }
+
+    onTermSubmit = async (term) => {
         const response = await youtube.get("/search", {
           params: {
-            q: "Goku"
+            q: term
           }
         });
         this.setState({
-          youTubeVideo: response.data.items[0],
+            ...this.state.youTubeVideo, youTubeVideo: response.data.items[0],
         });
       };
 
       renderVideoFrame = () => {
-          if (this.state.youTubeVideo.id !== undefined) {
+          if (this.state.youTubeVideo.id) {
               return (
                     <div>
                         <div className="ui embed">
@@ -41,7 +46,6 @@ class MovieVIdeo extends React.Component {
       }
 
     render() {
-        console.log(this.state.youTubeVideo)
         return (
             <div>
                 {this.renderVideoFrame()}

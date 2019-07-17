@@ -97,7 +97,8 @@ class MoviesList extends React.Component{
                 this.filterMovies().map(movie => (
                     <MovieCard  
                         {...this.props} 
-                        movie={movie} 
+                        movie={movie}
+                        key={movie.id}
                     />
                 ))
             )
@@ -116,16 +117,18 @@ class MoviesList extends React.Component{
         return (
             <div className="moviesListPage">
                 <LoginForm loggedInStatus={this.props.loggedInStatus} />
-                <input type='text'
-                    onChange={this.handleChange}
-                    value={this.state.term}
-                />
+                <div className="inputSearch">
+                    <input type='text'
+                        onChange={this.handleChange}
+                        value={this.state.term}
+                    />
+
+                </div>
                 <div className="moviesList">
-                    {/* <button onClick={this.saveMoviesInDB}>sendToDB</button> */}
-                    {/* User Status:  {this.props.loggedInStatus ? "Logged in" : "Logged Out"} */}
+                        {/* <button onClick={this.saveMoviesInDB}>sendToDB</button> */}
+                        {/* User Status:  {this.props.loggedInStatus ? "Logged in" : "Logged Out"} */}
                     {this.renderMovies()}
                 </div>
-
             </div>
         )
     }
