@@ -3,7 +3,6 @@ import axios from 'axios';
 import Buttons from './Buttons';
 import { Link } from 'react-router-dom';
 import MovieVideo from './MovieVIdeo';
-import  youtube  from '../api/youtube';
 
 
 
@@ -31,19 +30,9 @@ class Movie extends React.Component {
         this.setStateUsersInfo(this.props.userInformation);
         this.getMovieAvg();
         this.getMovieGeneralRatingFromDb();
-        this.onTermSubmit("buildings");
     }
 
-    onTermSubmit = async term => {
-      const response = await youtube.get("/search", {
-        params: {
-          q: term
-        }
-      });
-      this.setState({
-        youTubeVideo: response.data.items[0],
-      });
-    };
+    
 
     sendUserRating = (rate) => {
         const config = {
@@ -207,7 +196,7 @@ class Movie extends React.Component {
                       {this.displayVotingBtns()}
                     </div>
                     <div className="movieVideo">
-                      <MovieVideo onTermSubmit={this.onTermSubmit} video={this.state.youTubeVideo} />
+                      <MovieVideo video={this.state.youTubeVideo} />
                     </div>
                 </div>
     

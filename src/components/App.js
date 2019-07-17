@@ -6,7 +6,6 @@ import Route from 'react-router-dom/Route';
 import SignupForm from './auth/SignupForm';
 import MoviesList from './MoviesList';
 import MovieDetails from './MovieDetails';
-import Header from './Header';
 
 class App extends React.Component {
  
@@ -59,8 +58,14 @@ class App extends React.Component {
                               )} 
                         />
                         <Route path='/' exact strict render={ props => (
-                          this.state.isLoggedIn ?(<Redirect to='app/movies' />) : (<Home  {...props} loggedInStatus={this.state.isLoggedIn}  />,
-                            <Header handleLogin={this.handleLogin} loggedInStatus={this.state.isLoggedIn} getUserDetails={this.getUserDetails}/>) 
+                          this.state.isLoggedIn ?(<Redirect to='app/movies' />) : (
+                            <Home  {...props} 
+                              loggedInStatus={this.state.isLoggedIn}
+                              handleLogin={this.handleLogin}
+                              getUserDetails={this.getUserDetails}
+                            />
+                            // <Header handleLogin={this.handleLogin} loggedInStatus={this.state.isLoggedIn} getUserDetails={this.getUserDetails}/>
+                          ) 
                           
                         )} 
                         />

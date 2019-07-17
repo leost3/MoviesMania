@@ -22,8 +22,7 @@ class MovieVIdeo extends React.Component {
       };
 
       renderVideoFrame = () => {
-          console.log(this.props)
-          if (this.state.youTubeVideo.id != undefined) {
+          if (this.state.youTubeVideo.id !== undefined) {
               return (
                     <div>
                         <div className="ui embed">
