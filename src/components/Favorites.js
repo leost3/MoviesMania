@@ -31,6 +31,10 @@ class Favorites extends React.Component {
           console.log(error);
         });
       }
+
+    updateFavoriteMovies = () => {
+        this.retrieveFavoriteMoviesFromDB();
+    }
         
     renderFavoriteMovies = () => {
        if (this.state.favoriteMovies.length) {
@@ -40,6 +44,7 @@ class Favorites extends React.Component {
                     {...this.props} 
                     favoriteMovies={movie}
                     key={movie.id}
+                    updateFavoriteMovies={this.updateFavoriteMovies}
                 />
             ))
         )

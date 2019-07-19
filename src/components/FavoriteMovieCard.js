@@ -13,7 +13,6 @@ function FavoriteMovieCard( props ) {
     };
     
     // if I want to implemente fifo - linked list
-    console.log(props)
     const handleClick = () => {
         props.history.push(`/app/movies/${props.movie.id}`);
     }
@@ -32,7 +31,8 @@ function FavoriteMovieCard( props ) {
             config
           )
           .then( response => {
-              console.log(response)
+              console.log(response);
+              props.updateFavoriteMovies()
             // this.setState({favoriteMovies:response.data.result});
           })
           .catch( error => {
