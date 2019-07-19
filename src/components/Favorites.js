@@ -9,7 +9,7 @@ class Favorites extends React.Component {
     }
 
     componentDidMount() {
-        // this.retrieveFavoriteMoviesFromDB();
+        this.retrieveFavoriteMoviesFromDB();
     }
 
     retrieveFavoriteMoviesFromDB = () => {
