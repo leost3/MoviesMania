@@ -2,6 +2,8 @@ import React from 'react'
 import axios from 'axios';
 import MovieCard from './MovieCard';
 import LoginForm from './auth/LoginForm';
+import MoviesListHeader from './moviesListHeader';
+
 class MoviesList extends React.Component{
 // APIKEYIMDB = 7605e85c
 // APIKEYTMDB = f94e9a18c1c262bae36e6cdc7be57a1d
@@ -113,6 +115,9 @@ class MoviesList extends React.Component{
         )
     }
 
+
+  
+
     render() {
         return (
             <div className="moviesListPage">
@@ -122,9 +127,14 @@ class MoviesList extends React.Component{
                         onChange={this.handleChange}
                         value={this.state.term}
                     />
-
                 </div>
                 <div className="moviesList">
+
+                    <div className="movieList_header">
+                        favorites
+                        < MoviesListHeader {...this.props} />
+                    </div>
+                    {/* <Link to='/app/movies/favorites'>Favorites</Link> */}
                         {/* <button onClick={this.saveMoviesInDB}>sendToDB</button> */}
                         {/* User Status:  {this.props.loggedInStatus ? "Logged in" : "Logged Out"} */}
                     {this.renderMovies()}

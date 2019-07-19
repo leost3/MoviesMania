@@ -41,13 +41,12 @@ class Movie extends React.Component {
         'http://localhost:8181/shoppingprojectphp/api/movies.php',
         {
           "action": "addToFavorites",
-          // "action": "getGeneralRatings",
           "movieId": this.state.movieDetails.id,
           "movieTitle": this.state.movieDetails.title,
           "poster_path": this.state.movieDetails.poster_path,
           "userId": parseInt(this.state.userInfo.userId)
         },
-        config
+        config,
       )
       .then( response => {
           console.log(response);
@@ -70,7 +69,7 @@ class Movie extends React.Component {
             "userId": this.state.userInfo.userId,
             "userRate": rate,
           },
-          config
+          config,
         )
         .then( response => {
             this.setState({...this.state.movieRating, movieRating:response.data.result[0]});
@@ -94,6 +93,7 @@ class Movie extends React.Component {
         config
       )
       .then( response => {
+        // console.log(response);
         this.setState({movieRateAvg: parseFloat(response.data.result['AVG(movie_rating)'])});
       })
       .catch( error => {
@@ -216,20 +216,21 @@ class Movie extends React.Component {
             5: "w780",
             6: "original"
         };
+
         const {id, title, overview, release_date, backdrop_path} = this.state.movieDetails;
-        // console.log(title);
+
         if (this.state.movieDetails) {
             return (
                 <div className="movieDetails_page">
-                  <Link to="/"> Back </Link>
-                  <div>
-                       <img 
-                          className="moviePoster" 
-                          src={`http://image.tmdb.org/t/p/${size[6]}/${backdrop_path}`} 
-                          alt={title} 
-                       />
-                  </div>
-                    {/* <button onClick={this.getMovieAvg} >GetRate</button> */}
+                    <Link to="/"> Back </Link>
+                    <Link to='/app/movies/favorites'>Favorites</Link>
+                    <div>
+                        <img 
+                            className="moviePoster" 
+                            src={`http://image.tmdb.org/t/p/${size[6]}/${backdrop_path}`} 
+                            alt={title} 
+                        />
+                    </div>
                     <div className="movieDescription">
                         <h1>{title}</h1>
                         <p>id: {id}</p>
@@ -250,10 +251,10 @@ class Movie extends React.Component {
                         </div>
                     </div>
                     <div className="votingBtns">
-                      {this.displayVotingBtns()}
+                        {this.displayVotingBtns()}
                     </div>
                     <div className="movieVideo">
-                      {this.renderVideoFrame()}
+                        {this.renderVideoFrame()}
                     </div>
 
                 </div>

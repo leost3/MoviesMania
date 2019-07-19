@@ -6,6 +6,8 @@ import Route from 'react-router-dom/Route';
 import SignupForm from './auth/SignupForm';
 import MoviesList from './MoviesList';
 import MovieDetails from './MovieDetails';
+import Favorites from './Favorites';
+
 
 class App extends React.Component {
  
@@ -49,6 +51,7 @@ class App extends React.Component {
                             <MoviesList {...props} 
                             loggedInStatus={this.state.isLoggedIn} 
                             getMovieDetails={this.getDetails}
+                            userInformation={this.state.userInformation}
                             /> 
                             )
                             :
@@ -82,6 +85,16 @@ class App extends React.Component {
                                 />
                             ) : ( <Redirect to='/' />)
                         )} 
+                        />
+                        <Route path='/app/:userid/favorites' render = { 
+                          props => (
+                            this.state.isLoggedIn ? (
+                              <Favorites {...props}
+                                  userInformation={this.state.userInformation}
+                              />
+                            ) : ( <Redirect to='/' />)
+                          )
+                        }
                         />
                         <Route component={Error} />
                     </Switch>
