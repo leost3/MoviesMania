@@ -14,7 +14,7 @@ function FavoriteMovieCard( props ) {
     
     // if I want to implemente fifo - linked list
     const handleClick = () => {
-        props.history.push(`/app/movies/${props.movie.id}`);
+        props.history.push(`/app/movies/${props.favoriteMovies.movieId}`);
     }
     
     const removeFromFavorites = () => {
@@ -33,7 +33,6 @@ function FavoriteMovieCard( props ) {
           .then( response => {
               console.log(response);
               props.updateFavoriteMovies()
-            // this.setState({favoriteMovies:response.data.result});
           })
           .catch( error => {
             console.log(error);
@@ -43,14 +42,14 @@ function FavoriteMovieCard( props ) {
 
 
     return (
-        <div className=" " key={props.title} >
+        <div className="favoriteCard" key={props.favoriteMovies.title} >
             {/* <Link to={`/app/username/${props.movie.title}`}> */}
                 <img src={`http://image.tmdb.org/t/p/${size[3]}/${props.favoriteMovies.moviePosterPath}`}
                     alt={props.favoriteMovies.title} 
                     onClick={handleClick}
                 />
                 <h4>{props.favoriteMovies.title}</h4>
-                <button onClick={removeFromFavorites}>TRASH</button>
+                <button className="btn_delete" onClick={removeFromFavorites}>TRASH</button>
             {/* </Link> */}
         </div>
     )

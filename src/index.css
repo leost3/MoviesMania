@@ -259,13 +259,28 @@ body {
 
 
 .movieCard {
-  background: orangered;
+  background: linear-gradient(0,0,0,0.3);
+  /* background-image: black; */
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 2px auto;
   border: 2px solid black;
   cursor: pointer;
+  overflow: hidden;
+}
+
+
+.movieCard img{
+  opacity: 0.5;
+  transform: scale(1.4);
+
+}
+.movieCard img:hover{
+  opacity: 1;
+  transform: scale(1);
+  transition: all 0.8s;
+
 }
 
 
@@ -308,4 +323,33 @@ body {
 
 .votingBtns {
   display: flex;
+}
+
+/* FAVORITES */
+
+.favoriteList {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: row wrap;
+}
+
+
+.favoriteCard {
+  padding: 0;
+  position: relative;
+  cursor: pointer;
+}
+
+.btn_delete {
+  position: absolute;
+  left: 8%;
+  top:2%;
+  transform: translate(8%,2%);
+  cursor: pointer;
+}
+
+.btn_delete:hover {
+  background: red;
 }

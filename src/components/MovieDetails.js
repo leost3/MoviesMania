@@ -33,7 +33,6 @@ class Movie extends React.Component {
     }
 
     addToFavorites = () => {
-      console.log("Added to favorites")
       const config = {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       };

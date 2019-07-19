@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import FavoriteMovieCard from './FavoriteMovieCard';
+import movieListHeader from './moviesListHeader';
 
 class Favorites extends React.Component {
     
@@ -13,16 +14,16 @@ class Favorites extends React.Component {
       }
 
     retrieveFavoriteMoviesFromDB = () => {
-        const config = {
-          headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        };
+        // const config = {
+        //   headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        // };
         axios.post(
           'http://localhost:8181/shoppingprojectphp/api/movies.php',
           {
             "action": "getFavorites",
             "userId": parseInt(this.props.userInformation.userId)
           },
-          config
+          // config
         )
         .then( response => {
           this.setState({favoriteMovies:response.data.result});
@@ -37,27 +38,28 @@ class Favorites extends React.Component {
     }
         
     renderFavoriteMovies = () => {
-       if (this.state.favoriteMovies.length) {
+        if (this.state.favoriteMovies.length) {
+          return (
+              this.state.favoriteMovies.map(movie => (
+                  <FavoriteMovieCard  
+                      {...this.props} 
+                      favoriteMovies={movie}
+                      key={movie.movieId}
+                      updateFavoriteMovies={this.updateFavoriteMovies}
+                  />
+              ))
+          )
+      }
         return (
-            this.state.favoriteMovies.map(movie => (
-                <FavoriteMovieCard  
-                    {...this.props} 
-                    favoriteMovies={movie}
-                    key={movie.id}
-                    updateFavoriteMovies={this.updateFavoriteMovies}
-                />
-            ))
+          <h1>Loading....</h1>
         )
-    }
-    return (
-      <h1>Loading....</h1>
-    )
     }
     
     
     render() {
         return (
-            <div>
+            <div className="favoriteList">
+                <movieListHeader />
                 {this.renderFavoriteMovies()}
             </div>
         )
