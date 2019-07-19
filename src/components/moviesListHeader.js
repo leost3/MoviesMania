@@ -9,9 +9,7 @@ class MoviesListHeader extends React.Component {
     render() {
         return (
             <div>
-                <button
-                    onClick={this.goToFavorites}
-                >
+                <button onClick={this.goToFavorites}>
                     Favorites
                 </button>
             </div>

@@ -31,36 +31,6 @@ class MoviesList extends React.Component{
         this.getMovieGeneralRatingFromDb();
     }
 
-    // saveMoviesInDB = () => {
-    //     const moviesObj = [];
-    //     this.state.moviesList.map(movie => {
-    //       moviesObj.push({
-    //           "id" :movie.id,
-    //           "title" :movie.title,
-    //       })
-    //     });
-
-    //   const config = {
-    //     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    //   };
-    //   axios.post(
-    //     'http://localhost:8181/shoppingprojectphp/api/postDb.php',
-    //     {
-    //       moviesInfo: moviesObj
-    //     },
-    //     config
-    //   )
-    //   .then( response => {
-    //     console.log("resp", response) 
-    //   })
-    //   .catch( error => {
-    //     console.log(error);
-    //   });
-    // }
-
-
-    
-
     //This function is shared between MoviesList and MovieDetails components
 
     handleChange = (e) => {
@@ -114,9 +84,6 @@ class MoviesList extends React.Component{
             </div>
         )
     }
-
-
-  
 
     render() {
         return (

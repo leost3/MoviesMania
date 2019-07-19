@@ -227,6 +227,7 @@ class Movie extends React.Component {
                     <div>
                         <img 
                             className="moviePoster" 
+                            // make base_url reusable http://image.tmdb.org/t/p
                             src={`http://image.tmdb.org/t/p/${size[6]}/${backdrop_path}`} 
                             alt={title} 
                         />

@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-
+import FavoriteMovieCard from './FavoriteMovieCard';
 
 class Favorites extends React.Component {
     
@@ -10,7 +10,7 @@ class Favorites extends React.Component {
 
     componentDidMount() {
         this.retrieveFavoriteMoviesFromDB();
-    }
+      }
 
     retrieveFavoriteMoviesFromDB = () => {
         const config = {
@@ -25,23 +25,35 @@ class Favorites extends React.Component {
           config
         )
         .then( response => {
-          console.log("resp", response.data);
-        //   this.setState({...this.state.moviesRatings, moviesRatings:response.data});
+          this.setState({favoriteMovies:response.data.result});
         })
         .catch( error => {
           console.log(error);
         });
       }
-    
-    
-    
-    
+        
+    renderFavoriteMovies = () => {
+       if (this.state.favoriteMovies.length) {
+        return (
+            this.state.favoriteMovies.map(movie => (
+                <FavoriteMovieCard  
+                    {...this.props} 
+                    favoriteMovies={movie}
+                    key={movie.id}
+                />
+            ))
+        )
+    }
+    return (
+      <h1>Loading....</h1>
+    )
+    }
     
     
     render() {
         return (
             <div>
-                Favorites
+                {this.renderFavoriteMovies()}
             </div>
         )
     }
