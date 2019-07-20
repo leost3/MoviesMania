@@ -73,6 +73,7 @@ class MoviesList extends React.Component{
                         key={movie.id}
                     />
                 ))
+              
             )
         }
         // if state is empty, render Loader
@@ -88,7 +89,16 @@ class MoviesList extends React.Component{
     render() {
         return (
             <div className="moviesListPage">
-                <LoginForm loggedInStatus={this.props.loggedInStatus} />
+                <div className="movieList_header">
+                    <h1>MY_LOGO</h1>
+                    <div className="navbar">
+                        < MoviesListHeader {...this.props} />
+                        <h1>Link1</h1>
+                        <h1>Link2</h1>
+                        <h1>Link3</h1>
+                    </div>
+                    <LoginForm loggedInStatus={this.props.loggedInStatus} />
+                </div>
                 <div className="inputSearch">
                     <input type='text'
                         onChange={this.handleChange}
@@ -97,10 +107,6 @@ class MoviesList extends React.Component{
                 </div>
                 <div className="moviesList">
 
-                    <div className="movieList_header">
-                        favorites
-                        < MoviesListHeader {...this.props} />
-                    </div>
                     {/* <Link to='/app/movies/favorites'>Favorites</Link> */}
                         {/* <button onClick={this.saveMoviesInDB}>sendToDB</button> */}
                         {/* User Status:  {this.props.loggedInStatus ? "Logged in" : "Logged Out"} */}

@@ -242,7 +242,16 @@ body {
   background: orangered;
 }
 
+/* Login Header */
 
+.loginInformation {
+  display: flex;
+}
+.loginForm {
+  display: flex;
+  background: yellowgreen;
+
+}
 
 /* MovieList */
 
@@ -250,16 +259,42 @@ body {
   display: flex;
   flex-direction: column;
   align-self: center;
+  background: orangered;
 }
 
+.movieList_header {
+  background: pink;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+}
 .moviesList {
   display: flex;
   flex-wrap: wrap;
+  background: greenyellow;
 }
 
+.inputSearch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.inputSearch input {
+  width: 15%;
+}
+.inputSearch input:hover {
+  width: 33%;
+  transition: all 2s;
+}
 
 .movieCard {
-  background: linear-gradient(0,0,0,0.3);
+  background: black;
   /* background-image: black; */
   display: flex;
   flex-direction: column;
@@ -270,7 +305,11 @@ body {
   overflow: hidden;
 }
 
-
+.movieCard h4 {
+  color: #f3f3f3;
+  text-transform: uppercase;
+  opacity: 0.4;
+}
 .movieCard img{
   opacity: 0.5;
   transform: scale(1.4);
@@ -326,20 +365,34 @@ body {
 }
 
 /* FAVORITES */
-
+.favoriteList__page {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  background: orangered;
+}
 .favoriteList {
-  padding: 0;
-  margin: 0;
   display: flex;
   flex-wrap: wrap;
-  flex-flow: row wrap;
+  background: greenyellow;
+
 }
 
 
 .favoriteCard {
-  padding: 0;
-  position: relative;
+  background: black;
+  /* background-image: black; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2px auto;
+  border: 2px solid black;
   cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  padding: 0;
+  cursor: pointer;
+  /* margin: 0 auto; */
 }
 
 .btn_delete {

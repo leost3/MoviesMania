@@ -18,11 +18,12 @@ function MovieCard( props ) {
     }
     
     return (
-        <div className="movieCard" >
-            {/* <Link to={`/app/username/${props.movie.title}`}> */}
-                <img src={`http://image.tmdb.org/t/p/${size[3]}/${props.movie.poster_path}`} alt={props.movie.title} onClick={handleClick} />
+        <div className="movieCard">
+                <img 
+                    src={`http://image.tmdb.org/t/p/${size[3]}/${props.movie.poster_path}`} 
+                    alt={props.movie.title} 
+                    onClick={handleClick} />
                 <h4>{props.movie.title}</h4>
-            {/* </Link> */}
         </div>
     )
 }

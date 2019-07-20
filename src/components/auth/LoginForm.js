@@ -81,8 +81,8 @@ class LoginForm extends React.Component {
         )
       }
       return (
-        <div>
-              <form onSubmit={this.handleLogOut}>
+        <div className="loginInformation">
+              <form onSubmit={this.handleLogOut} className="loginForm" >
                   <h1>Welcome: {this.state.username}</h1>
                   <button type="submit">  Logout </button>
               </form>

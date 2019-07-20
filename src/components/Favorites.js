@@ -3,7 +3,7 @@ import axios from 'axios';
 import FavoriteMovieCard from './FavoriteMovieCard';
 import movieListHeader from './moviesListHeader';
 
-class Favorites extends React.Component {
+class FavoritesList extends React.Component {
     
     state = {
         favoriteMovies: [],
@@ -51,19 +51,25 @@ class Favorites extends React.Component {
           )
       }
         return (
-          <h1>Loading....</h1>
+          <div className="loader">
+          <div className="outer"></div>
+          <div className="middle"></div>
+          <div className="inner"></div>
+      </div>
         )
     }
     
     
     render() {
         return (
+          <div className="favoriteList__page">
             <div className="favoriteList">
-                <movieListHeader />
+                {/* <movieListHeader /> */}
                 {this.renderFavoriteMovies()}
             </div>
+          </div>
         )
     }
 }
 
-export default Favorites;
+export default FavoritesList;
