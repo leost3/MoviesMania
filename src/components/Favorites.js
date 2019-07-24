@@ -14,16 +14,12 @@ class FavoritesList extends React.Component {
       }
 
     retrieveFavoriteMoviesFromDB = () => {
-        // const config = {
-        //   headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        // };
         axios.post(
           'http://localhost:8181/shoppingprojectphp/api/movies.php',
           {
             "action": "getFavorites",
             "userId": parseInt(this.props.userInformation.userId)
           },
-          // config
         )
         .then( response => {
           this.setState({favoriteMovies:response.data.result});

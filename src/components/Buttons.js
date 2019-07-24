@@ -12,7 +12,7 @@ class Buttons extends React.Component {
         // }
     }
 
-    rateMovie = (e) => {
+    rateMovie = e => {
         const movieRating = e.target.value;
         this.props.setMovieRating(movieRating);
         // this.setState({hasUserRated: true});
@@ -24,15 +24,23 @@ class Buttons extends React.Component {
     renderBtn = () => {
         
         if (this.props.hasUserRated) {
-            return <button  disabled onClick={this.rateMovie} key={this.props.i} value={this.props.i}>{this.props.i}</button>;
+            return (
+                <div className="userHasRated">
+                       <button  disabled onClick={this.rateMovie} key={this.props.i} value={this.props.i}>{this.props.i}</button>
+                </div>
+            ) 
         }
-        return <button  onClick={this.rateMovie} value={this.props.i}>{this.props.i}</button>;
+        return (
+            <div className="userHasNotRated">
+                <button  onClick={this.rateMovie} value={this.props.i}>{this.props.i}</button>
+            </div>
+        ) 
     }
 
     render() {
         // console.log(this.state.hasUserRated)
         return (
-            <div>
+            <div className="VotingBtn" >
                 {this.renderBtn()}
             </div>
         )

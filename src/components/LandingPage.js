@@ -63,9 +63,9 @@ function Home() {
         slideInterval = setInterval(nextSlide, intervalTime);
     }
   
-    const renderSliders = () => {
+    // const renderSliders = () => {
 
-    }
+    // }
 
 
     return (

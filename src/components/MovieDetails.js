@@ -1,19 +1,17 @@
 import React from 'react';
 import axios from 'axios';
 import Buttons from './Buttons';
-import { Link } from 'react-router-dom';
 import youtube from '../api/youtube';
 import MoviesListHeader from './moviesListHeader';
 
 class Movie extends React.Component {
     state = {
         movieDetails: {},
-        // userRating: null,
         userInfo: [],
         movieRating: {},
         movieRateAvg: null,
         youTubeVideo: {},
-
+        isFavorite: false,
     }
 
     async componentDidMount() {
@@ -30,9 +28,11 @@ class Movie extends React.Component {
         this.setState({userInfo:this.props.userInformation});
         this.getMovieAvg();
         this.getMovieGeneralRatingFromDb();
-        this.onTermSubmit(this.state.movieDetails.title)
+        this.onTermSubmit(this.state.movieDetails.title);
+        this.checkIfMovieIsFavorited();
     }
 
+    // Send movie to favorites list
     addToFavorites = () => {
       const config = {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -56,6 +56,7 @@ class Movie extends React.Component {
       });
     }
 
+    
     sendUserRating = (rate) => {
         const config = {
           headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -127,6 +128,23 @@ class Movie extends React.Component {
     //     this.setState({...this.state.userInfo, userInfo});
     // }
 
+    checkIfMovieIsFavorited = () => {
+      axios.post(
+        'http://localhost:8181/shoppingprojectphp/api/movies.php',
+        {
+          "action": "isFavorite",
+          "movieId": parseInt(this.state.movieDetails.id)
+        },
+      )
+      .then( response => {
+        this.setState({isFavorite:response.data.result});
+      })
+      .catch( error => {
+        console.log(error);
+      });
+    }
+
+
     setMovieRating = (rate) => {
         this.sendUserRating(parseInt(rate));
     }
@@ -150,12 +168,17 @@ class Movie extends React.Component {
     renderRadialProgressBarUser = () => {
       if (this.state.movieRating !== undefined) {
         return (
-          <div className="pie-wrapper progress-half">
-            <span className="label">{this.state.movieRating.movie_rating}<em></em></span>
-            <div className="pie">
-              <div className="left-side half-circle"></div>
-              <div className="right-side half-circle"></div>
-            </div>  
+          <div className="usersVote">
+              <div className="pie-wrapper progress-half">
+                  <span className="label">{this.state.movieRating.movie_rating}<em></em></span>
+                  <div className="pie">
+                    <div className="left-side half-circle"></div>
+                    <div className="right-side half-circle"></div>
+                  </div>  
+              </div>
+              <div>
+                  <p>Thanks for your vote!</p>
+              </div>
           </div>
         )
       }
@@ -164,16 +187,18 @@ class Movie extends React.Component {
     renderRadialProgressBarGeneral = () => {
       if (this.state.movieRating !== undefined) {
         return (
-          <div className="pie-wrapper progress-half">
-            <span className="label">{this.state.movieRateAvg}<em></em></span>
-            <div className="pie">
-              <div className="left-side half-circle"></div>
-              <div className="right-side half-circle"></div>
-            </div>  
+          <div className="generalVotings">
+              <div className="pie-wrapper progress-half">
+                <span className="label">{this.state.movieRateAvg}<em></em></span>
+                <div className="pie">
+                  <div className="left-side half-circle"></div>
+                  <div className="right-side half-circle"></div>
+                </div>  
+              </div>
           </div>
         )
       }
-      return "Not voted";
+      return "Please, leave your vote =)";
     }
 
     
@@ -191,12 +216,9 @@ class Movie extends React.Component {
     renderVideoFrame = () => {
         if (this.state.youTubeVideo.id) {
             return (
-                  <div>
+                  <div className="movieVideo">
                       <div className="ui embed">
-                          <iframe title="video player" src={`https://www.youtube.com/embed/${this.state.youTubeVideo.id.videoId}`} />
-                      </div>
-                      <div className="ui segment">
-                          
+                          <iframe className="iFrame" title="video player" src={`https://www.youtube.com/embed/${this.state.youTubeVideo.id.videoId}`} />
                       </div>
                   </div>
             )
@@ -204,6 +226,23 @@ class Movie extends React.Component {
         return (
             <h1>Loading</h1>
         )
+    }
+
+    renderFavoriteButton = () => {
+      if (!this.state.isFavorite) {
+        return (
+          <div className="btnFavorite">
+              <button onClick={this.addToFavorites}> 
+              <i className="fas fa-star">Add to Favorites</i> 
+              </button>
+          </div>
+        )
+      }
+      return (
+        <div className="btnFavorite">
+              <i className="fas fa-star"></i> 
+          </div>
+      )
     }
 
     render() {
@@ -233,15 +272,15 @@ class Movie extends React.Component {
                     </div>
                     <div className="movieDescription">
                         <h1>{title}</h1>
-                        <p>id: {id}</p>
                         <p>Overview: {overview}</p>
-                        <h1>Release Date:{release_date}</h1>
+                        <h2>Release Date:{release_date}</h2>
                     </div>
-                    <div className="btnFavorite">
-                        <button onClick={this.addToFavorites} > 
-                            Add to Favorites
+                    {this.renderFavoriteButton()}
+                    {/* <div className="btnFavorite">
+                        <button onClick={this.addToFavorites}> 
+                        <i className="fas fa-star">Add to Favorites</i> 
                         </button>
-                    </div>
+                    </div> */}
                     <div className="movieRatings">
                         <div>
                             <h1>Your Rating:</h1> {this.renderRadialProgressBarUser()}
@@ -253,9 +292,7 @@ class Movie extends React.Component {
                     <div className="votingBtns">
                         {this.displayVotingBtns()}
                     </div>
-                    <div className="movieVideo">
-                        {this.renderVideoFrame()}
-                    </div>
+                    {this.renderVideoFrame()}
 
                 </div>
     

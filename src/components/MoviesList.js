@@ -1,7 +1,6 @@
 import React from 'react'
 import axios from 'axios';
 import MovieCard from './MovieCard';
-import LoginForm from './auth/LoginForm';
 import MoviesListHeader from './moviesListHeader';
 
 class MoviesList extends React.Component{
@@ -97,6 +96,10 @@ class MoviesList extends React.Component{
                         onChange={this.handleChange}
                         value={this.state.term}
                     />
+                    <span class="bottom"></span>
+                    <span class="right"></span>
+                    <span class="top"></span>
+                    <span class="left"></span>
                 </div>
                 <div className="moviesList">
 

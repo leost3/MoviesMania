@@ -16,7 +16,7 @@ button {
   padding: 0;
   width: auto;
   overflow: visible;
-
+  cursor: pointer;
   background: transparent;
 
   /* inherit font & color from ancestor */
@@ -290,11 +290,10 @@ body {
 
 .navbar {
   background: greenyellow;
-
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .navLinks {
@@ -302,7 +301,44 @@ body {
 }
 .navLinks button{
   margin: 2rem;
+  z-index: 1;
+  position: relative;
+  font-size: inherit;
+  font-family: inherit;
+  color: white;
+  padding: 0.5em 1em;
+  outline: none;
+  border: none;
+  background-color: hsl(236, 32%, 26%);
+  overflow: hidden;
+  transition: color 0.4s ease-in-out;
 }
+
+.navLinks button::before {
+  content: '';
+  z-index: -1;
+  position: absolute;
+  bottom: 100%;
+  right: 100%;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  background-color: #3cefff;
+  transform-origin: center;
+  transform: translate3d(50%, 50%, 0) scale3d(0, 0, 0);
+  transition: transform 0.45s ease-in-out;
+}
+
+.navLinks button:hover  {
+  cursor: pointer;
+  color: #161616;
+}
+
+.navLinks button:hover::before {
+  transform: translate3d(50%, 50%, 0) scale3d(15, 15, 15);
+}
+
+
 .moviesList {
   display: flex;
   flex-wrap: wrap;
@@ -310,11 +346,12 @@ body {
 }
 
 .inputSearch {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 50px;
+  height: 100px;
 }
 .inputSearch input {
   width: 15%;
@@ -326,14 +363,95 @@ body {
   padding: .7rem 2rem;
   border-radius: 100px;
   width: 25%;
-  transition: all .5s;
+  transition: all 2s;
   margin-right: -3.5rem;
 }
 .inputSearch input:focus{
   outline: none;
   width: 33%;
   transition: all 2s;
+  color: white;
+  font-size: inherit;
+  font-family: inherit;
+  background-color: hsl(236, 32%, 26%);
+  padding: 0.35em 0.45em;
+  border: 1px solid transparent;
+  transition: background-color 2s ease-in-out;
 }
+
+.inputSearch  input:focus {
+    outline: none;
+  }
+
+.inputSearch  input::placeholder {
+    color: hsla(0, 0%, 100%, 0.6);
+  }
+
+.inputSearch  span {
+    position: absolute;
+    background-color: #3cefff;
+    transition: transform 0.5s ease;
+  }
+
+.inputSearch  .bottom,
+  .top {
+    height: 1px;
+    left: 0;
+    right: 0;
+    transform: scaleX(0);
+  }
+
+.inputSearch  .left,
+  .right {
+    width: 1px;
+    top: 0;
+    bottom: 0;
+    transform: scaleY(0);
+  }
+
+.inputSearch  .bottom {
+    bottom: 0;
+    transform-origin: bottom right;
+  }
+
+.inputSearch  input:focus ~ .bottom {
+    transform-origin: bottom left;
+    transform: scaleX(1);
+  }
+
+.inputSearch  .right {
+    right: 0;
+    transform-origin: top right;
+  }
+
+.inputSearch  input:focus ~ .right {
+    transform-origin: bottom right;
+    transform: scaleY(1);
+  }
+
+.inputSearch  .top {
+    top: 0;
+    transform-origin: top left;
+  }
+
+.inputSearch  input:focus ~ .top {
+    transform-origin: top right;
+    transform: scaleX(1);
+  }
+
+.inputSearch  .left {
+    left: 0;
+    transform-origin: bottom left;
+  }
+
+.inputSearch  input:focus ~ .left {
+    transform-origin: top left;
+    transform: scaleY(1);
+  }
+
+
+
+
 
 .movieCard, .favoriteCard {
   position: relative;
@@ -378,32 +496,117 @@ body {
 
 .movieDetails_page {
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.movieDescription,
+.btnFavorite,
+.movieRatings,
+.votingBtns,
+.movieVideo {
+  margin: 20px;
+}
+
+.btnFavorite {
+  font-size: 50px;
 }
 
 .movieDescription {
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  width: 60%;
+  text-align: center;
+}
+.movieDescription * {
+    margin: 15px 0;
 }
 
+.movieDescription h1 {
+    font-size: 5rem;
+    color: steelblue;
+}
 .movieRatings {
-  width: 100%;
+  width: 80%;
   /* background: #3cefff; */
   display: flex;
-  align-items: center;
+  align-items: baseline;
 
   /* justify-items: space-around; */
   justify-content: space-around;
 }
 
+.movieRatings h1 {
+  text-align: center;
+}
+.usersVote {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+}
 
+
+.generalVotings {
+  display: flex;
+}
+
+.pie-wrapper.progress-half {
+  margin: 0 auto;
+}
+.usersVote p {
+  text-align: center;
+  color: steelblue;
+}
 .votingBtns {
   display: flex;
 }
+.VotingBtn {
+  margin: 0.5rem;
+}
+
+.VotingBtn .userHasRated button {
+  font-size: 2rem;
+  border: 2px solid white;
+  border-radius: 50%;
+  width: 3rem;
+  background: gray;
+  cursor: auto;
+}
+
+/* 
+.VotingBtn .userHasRated button:hover {
+  background: rgb(7, 60, 104);
+  transition: 0.5s;
+} */
+
+
+.VotingBtn .userHasNotRated button {
+  font-size: 2rem;
+  border: 2px solid white;
+  border-radius: 50%;
+  width: 3rem;
+  background: steelblue;
+  cursor: pointer;
+}
+
+.VotingBtn .userHasNotRated button:hover {
+  background: rgb(7, 60, 104);
+  transition: 0.5s;
+}
+
+
+
+
+
+
+
+
+
+
 
 /* FAVORITES */
 .favoriteList__page {
@@ -418,26 +621,22 @@ body {
   background: greenyellow;
 
 }
-/* 
 
-.favoriteCard {
-  background: blue;
-  background-image: black;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 2px auto;
-  border: 2px solid black;
-  cursor: pointer;
-  overflow: hidden;
-  position: relative;
-  padding: 0;
-  cursor: pointer;
-  margin: 0 auto;
-} 
-*/
+.movieVideo {
+  background: #fc2f70;
+  width: 80%;
+  height: 500px;
+}
 
+.ui.embed {
+  height: 100%;
+}
+.iFrame{
+  width: 100%;
+  height: 100%;
+}
 .btn_delete {
+  font-size: 20px;
   position: absolute;
   left: 8%;
   top:2%;
@@ -446,5 +645,6 @@ body {
 }
 
 .btn_delete:hover {
-  background: red;
+  color: red;
+  transition: 0.8s;
 }
