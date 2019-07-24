@@ -90,14 +90,7 @@ class MoviesList extends React.Component{
         return (
             <div className="moviesListPage">
                 <div className="movieList_header">
-                    <h1>MY_LOGO</h1>
-                    <div className="navbar">
-                        < MoviesListHeader {...this.props} />
-                        <h1>Link1</h1>
-                        <h1>Link2</h1>
-                        <h1>Link3</h1>
-                    </div>
-                    <LoginForm loggedInStatus={this.props.loggedInStatus} />
+                    <MoviesListHeader {...this.props} />
                 </div>
                 <div className="inputSearch">
                     <input type='text'

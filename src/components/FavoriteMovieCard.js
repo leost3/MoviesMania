@@ -42,15 +42,13 @@ function FavoriteMovieCard( props ) {
 
 
     return (
-        <div className="favoriteCard" key={props.favoriteMovies.title} >
-            {/* <Link to={`/app/username/${props.movie.title}`}> */}
-                <img src={`http://image.tmdb.org/t/p/${size[3]}/${props.favoriteMovies.moviePosterPath}`}
-                    alt={props.favoriteMovies.title} 
-                    onClick={handleClick}
-                />
-                <h4>{props.favoriteMovies.title}</h4>
-                <button className="btn_delete" onClick={removeFromFavorites}>TRASH</button>
-            {/* </Link> */}
+        <div className="favoriteCard">
+            <img src={`http://image.tmdb.org/t/p/${size[3]}/${props.favoriteMovies.moviePosterPath}`}
+                alt={props.favoriteMovies.title} 
+                onClick={handleClick}
+            />
+            <h4>{props.favoriteMovies.title}</h4>
+            <button className="btn_delete" onClick={removeFromFavorites}>TRASH</button>
         </div>
     )
 }

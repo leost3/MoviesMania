@@ -10,9 +10,28 @@ body, html {
   padding: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+button {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+
+  background: transparent;
+
+  /* inherit font & color from ancestor */
+  color: inherit;
+  font: inherit;
+
+  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+  line-height: normal;
+
+  /* Corrects font smoothing for webkit */
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+
+  /* Corrects inability to style clickable `input` types in iOS */
+  -webkit-appearance: none;
 }
 
 /* LOADER MOVIES LIST */
@@ -214,6 +233,7 @@ body {
   padding: 13px 15px;
   border-radius: 50%;
   outline: none;
+  opacity: 0.5;
 }
 
 .buttons button:hover {
@@ -263,15 +283,25 @@ body {
 }
 
 .movieList_header {
-  background: pink;
   display: flex;
   align-items: center;
   justify-content: space-around;
 }
 
 .navbar {
+  background: greenyellow;
+
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-around;
+}
+
+.navLinks {
+  display: flex;
+}
+.navLinks button{
+  margin: 2rem;
 }
 .moviesList {
   display: flex;
@@ -284,22 +314,34 @@ body {
   align-items: center;
   justify-content: center;
   width: 100%;
+  height: 50px;
 }
 .inputSearch input {
   width: 15%;
+  border-radius: 100px;
+  font-family: inherit;
+  font-size: inherit;
+  background-color: lightgray;
+  border: 1px solid black;
+  padding: .7rem 2rem;
+  border-radius: 100px;
+  width: 25%;
+  transition: all .5s;
+  margin-right: -3.5rem;
 }
-.inputSearch input:hover {
+.inputSearch input:focus{
+  outline: none;
   width: 33%;
   transition: all 2s;
 }
 
-.movieCard {
-  background: black;
-  /* background-image: black; */
+.movieCard, .favoriteCard {
+  position: relative;
+  background: #000;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 2px auto;
+  margin: 0.5rem auto;
   border: 2px solid black;
   cursor: pointer;
   overflow: hidden;
@@ -310,16 +352,15 @@ body {
   text-transform: uppercase;
   opacity: 0.4;
 }
-.movieCard img{
+.movieCard img, .favoriteCard img{
   opacity: 0.5;
   transform: scale(1.4);
 
 }
-.movieCard img:hover{
+.movieCard img:hover, .favoriteCard img:hover{
   opacity: 1;
   transform: scale(1);
   transition: all 0.8s;
-
 }
 
 
@@ -377,11 +418,11 @@ body {
   background: greenyellow;
 
 }
-
+/* 
 
 .favoriteCard {
-  background: black;
-  /* background-image: black; */
+  background: blue;
+  background-image: black;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -392,8 +433,9 @@ body {
   position: relative;
   padding: 0;
   cursor: pointer;
-  /* margin: 0 auto; */
-}
+  margin: 0 auto;
+} 
+*/
 
 .btn_delete {
   position: absolute;

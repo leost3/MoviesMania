@@ -3,6 +3,7 @@ import axios from 'axios';
 import Buttons from './Buttons';
 import { Link } from 'react-router-dom';
 import youtube from '../api/youtube';
+import MoviesListHeader from './moviesListHeader';
 
 class Movie extends React.Component {
     state = {
@@ -221,8 +222,7 @@ class Movie extends React.Component {
         if (this.state.movieDetails) {
             return (
                 <div className="movieDetails_page">
-                    <Link to="/"> Back </Link>
-                    <Link to='/app/movies/favorites'>Favorites</Link>
+                    <MoviesListHeader {...this.props} />
                     <div>
                         <img 
                             className="moviePoster" 

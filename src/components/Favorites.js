@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import FavoriteMovieCard from './FavoriteMovieCard';
-import movieListHeader from './moviesListHeader';
+import MoviesListHeader from './moviesListHeader';
 
 class FavoritesList extends React.Component {
     
@@ -63,10 +63,11 @@ class FavoritesList extends React.Component {
     render() {
         return (
           <div className="favoriteList__page">
-            <div className="favoriteList">
-                {/* <movieListHeader /> */}
-                {this.renderFavoriteMovies()}
-            </div>
+              <MoviesListHeader {...this.props} /> 
+              <div className="favoriteList">
+                  {/* <movieListHeader /> */}
+                  {this.renderFavoriteMovies()}
+              </div>
           </div>
         )
     }

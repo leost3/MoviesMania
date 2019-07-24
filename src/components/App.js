@@ -82,7 +82,8 @@ class App extends React.Component {
                                 handleLogin={this.handleLogin} 
                                 movieDetails={this.state.detailedMovie } 
                                 userInformation={this.state.userInformation}
-                                />
+                                loggedInStatus={this.state.isLoggedIn}
+                              />
                             ) : ( <Redirect to='/' />)
                         )} 
                         />
@@ -91,6 +92,7 @@ class App extends React.Component {
                             this.state.isLoggedIn ? (
                               <Favorites {...props}
                                   userInformation={this.state.userInformation}
+                                  loggedInStatus={this.state.isLoggedIn}
                               />
                             ) : ( <Redirect to='/' />)
                           )
