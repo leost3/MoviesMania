@@ -77,10 +77,12 @@ class MoviesList extends React.Component{
         }
         // if state is empty, render Loader
         return (
-            <div className="loader">
-                <div className="outer"></div>
-                <div className="middle"></div>
-                <div className="inner"></div>
+            <div className="loader_container">
+                <div className="loader">
+                    <div className="outer"></div>
+                    <div className="middle"></div>
+                    <div className="inner"></div>
+                </div>
             </div>
         )
     }
@@ -96,16 +98,13 @@ class MoviesList extends React.Component{
                         onChange={this.handleChange}
                         value={this.state.term}
                     />
-                    <span class="bottom"></span>
-                    <span class="right"></span>
-                    <span class="top"></span>
-                    <span class="left"></span>
+                    <span className="bottom"></span>
+                    <span className="right"></span>
+                    <span className="top"></span>
+                    <span className="left"></span>
                 </div>
+                
                 <div className="moviesList">
-
-                    {/* <Link to='/app/movies/favorites'>Favorites</Link> */}
-                        {/* <button onClick={this.saveMoviesInDB}>sendToDB</button> */}
-                        {/* User Status:  {this.props.loggedInStatus ? "Logged in" : "Logged Out"} */}
                     {this.renderMovies()}
                 </div>
             </div>

@@ -17,9 +17,6 @@ class LoginForm extends React.Component {
     }
 
     handleLogOut = () => {
-      // localStorage.setItem("loggedIn", false)
-      // localStorage.setItem("username", "")
-      // localStorage.setItem("userid", "")
       localStorage.clear();
     }
 
@@ -56,11 +53,10 @@ class LoginForm extends React.Component {
     }
 
     renderForm = () => {
-      // console.log('loggedin props', this.props.loggedInStatus)
       if (!this.props.loggedInStatus) {
         return (
-          <div>
-              <form onSubmit={this.handleSubmit}>
+          <div className='login'>
+              <form onSubmit={this.handleSubmit} className='loginForm'>
                   <input 
                     className="" 
                     value={this.state.username} 
@@ -82,7 +78,7 @@ class LoginForm extends React.Component {
       }
       return (
         <div className="loginInformation">
-              <form onSubmit={this.handleLogOut} className="loginForm" >
+              <form onSubmit={this.handleLogOut} className="loggedInForm" >
                   <h1>Welcome: {this.state.username}</h1>
                   <button type="submit">  Logout </button>
               </form>

@@ -40,7 +40,6 @@ function FavoriteMovieCard( props ) {
         }
     
 
-
     return (
         <div className="favoriteCard">
             <img src={`http://image.tmdb.org/t/p/${size[3]}/${props.favoriteMovies.moviePosterPath}`}

@@ -28,7 +28,7 @@ class Movie extends React.Component {
         this.setState({userInfo:this.props.userInformation});
         this.getMovieAvg();
         this.getMovieGeneralRatingFromDb();
-        this.onTermSubmit(this.state.movieDetails.title);
+        this.onTermSubmit(this.state.movieDetails.title + "movie official trailer");
         this.checkIfMovieIsFavorited();
     }
 
@@ -50,6 +50,7 @@ class Movie extends React.Component {
       )
       .then( response => {
           console.log(response);
+          this.checkIfMovieIsFavorited();
       })
       .catch( error => {
         console.log(error);
@@ -95,7 +96,7 @@ class Movie extends React.Component {
       )
       .then( response => {
         // console.log(response);
-        this.setState({movieRateAvg: parseFloat(response.data.result['AVG(movie_rating)'])});
+        this.setState({movieRateAvg: parseFloat(response.data.result['AVG(movie_rating)']).toFixed(2)});
       })
       .catch( error => {
         console.log(error);
@@ -166,7 +167,8 @@ class Movie extends React.Component {
     }
 
     renderRadialProgressBarUser = () => {
-      if (this.state.movieRating !== undefined) {
+      if (this.state.movieRating!== undefined) {
+        console.log(this.state.movieRating)
         return (
           <div className="usersVote">
               <div className="pie-wrapper progress-half">
@@ -186,6 +188,7 @@ class Movie extends React.Component {
     }
     renderRadialProgressBarGeneral = () => {
       if (this.state.movieRating !== undefined) {
+        console.log(this.state.movieRateAvg)
         return (
           <div className="generalVotings">
               <div className="pie-wrapper progress-half">
@@ -231,20 +234,21 @@ class Movie extends React.Component {
     renderFavoriteButton = () => {
       if (!this.state.isFavorite) {
         return (
-          <div className="btnFavorite">
-              <button onClick={this.addToFavorites}> 
-              <i className="fas fa-star">Add to Favorites</i> 
-              </button>
+          <div className="btnIsNotFavorite">
+         
+            <button onClick={this.addToFavorites}> 
+            <i className="fas fa-star"></i>
+            </button>
           </div>
         )
       }
       return (
-        <div className="btnFavorite">
+        <div className="btnIsFavorite">
               <i className="fas fa-star"></i> 
           </div>
       )
     }
-
+    // btnFavorite
     render() {
         const size = { 
             0: "w92",
@@ -256,7 +260,7 @@ class Movie extends React.Component {
             6: "original"
         };
 
-        const {id, title, overview, release_date, backdrop_path} = this.state.movieDetails;
+        const {title, overview, release_date, backdrop_path} = this.state.movieDetails;
 
         if (this.state.movieDetails) {
             return (
@@ -272,15 +276,12 @@ class Movie extends React.Component {
                     </div>
                     <div className="movieDescription">
                         <h1>{title}</h1>
-                        <p>Overview: {overview}</p>
-                        <h2>Release Date:{release_date}</h2>
+                        <h2>Overview</h2> 
+                        <p>{overview}</p>
+                        <h2>Release Date </h2>
+                        <p>{release_date}</p>
                     </div>
                     {this.renderFavoriteButton()}
-                    {/* <div className="btnFavorite">
-                        <button onClick={this.addToFavorites}> 
-                        <i className="fas fa-star">Add to Favorites</i> 
-                        </button>
-                    </div> */}
                     <div className="movieRatings">
                         <div>
                             <h1>Your Rating:</h1> {this.renderRadialProgressBarUser()}

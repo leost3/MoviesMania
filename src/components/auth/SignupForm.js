@@ -12,6 +12,8 @@ class SignupForm extends React.Component {
       password: 'sa',
       confirmPassword: 'sa',
     }
+
+
     handleFirstnameInput = (e) => {
       this.setState({...this.state, firstName:e.target.value});
     }
@@ -35,10 +37,15 @@ class SignupForm extends React.Component {
       this.setState({...this.state, confirmPassword:e.target.value});
     }
 
+    doPasswordValidation = () => {
+      if (this.state.password === this.state.confirmPassword) return true;
+    }
+
+
     handleSubmit = (e) => {
       e.preventDefault();
-      console.log('Register form submited');
-      const config = {
+
+        const config = {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       };
       axios.post(
@@ -68,17 +75,20 @@ class SignupForm extends React.Component {
     }
     render() {
         return (
-          <div>
-            <Link to="/">Home</Link>
-              <form onSubmit={this.handleSubmit}>
-                  <input className="" value={this.state.firstName} placeholder="username" type="text" onChange={this.handleFirstnameInput}/>
-                  <input className="" value={this.state.lastName} placeholder="username" type="text" onChange={this.handleLastNameInput}/>
-                  <input className="" value={this.state.email} placeholder="username" type="text" onChange={this.handleEmailInput}/>
-                  <input className="" value={this.state.username} placeholder="username" type="text" onChange={this.handleUsernameInput}/>
-                  <input className="" value={this.state.password} placeholder="password" type="text" onChange={this.handlePasswordInput}/>
-                  <input className="" value={this.state.confirmPassword} placeholder="password" type="text" onChange={this.handleConfirmPasswordInput}/>
+          <div className="signup_component">
+          <Link to="/">Home</Link>
+          <div className='signup'>
+              <form className='sigupForm' onSubmit={this.handleSubmit}>
+                  First Name<input className="" value={this.state.firstName} placeholder="first name" type="text" onChange={this.handleFirstnameInput}/>
+                  Last Name<input className="" value={this.state.lastName} placeholder="last name" type="text" onChange={this.handleLastNameInput}/>
+                  Email Address<input className="" value={this.state.email} placeholder="email" type="text" onChange={this.handleEmailInput}/>
+                  Username<input className="" value={this.state.username} placeholder="username" type="text" onChange={this.handleUsernameInput}/>
+                  Password<input className="" value={this.state.password} placeholder="password" type="text" onChange={this.handlePasswordInput}/>
+                  Confirm Password<input className="" value={this.state.confirmPassword} placeholder="Confirm your password" type="text" onChange={this.handleConfirmPasswordInput}/>
                   <button type="submit"> SignUp </button>
               </form>
+          </div>
+
           </div>
         )
     }
