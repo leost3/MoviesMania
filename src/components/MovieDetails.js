@@ -178,7 +178,6 @@ class Movie extends React.Component {
       return "Not voted";
     }
     renderRadialProgressBarGeneral = () => {
-      console.log(typeof this.state.movieRateAvg)
       if (this.state.movieRateAvg !== "NaN") {
         return (
           <div className="generalVotings">
@@ -192,7 +191,7 @@ class Movie extends React.Component {
           </div>
         )
       }
-      return "Please, leave your vote =)";
+      return "No user has voted in this movie yet";
     }
 
     
@@ -226,16 +225,17 @@ class Movie extends React.Component {
       if (!this.state.isFavorite) {
         return (
           <div className="btnIsNotFavorite">
-         
             <button onClick={this.addToFavorites}> 
             <i className="fas fa-star"></i>
             </button>
+            <p> Add {this.state.movieDetails.title} to your favorite list</p>
           </div>
         )
       }
       return (
         <div className="btnIsFavorite">
               <i className="fas fa-star"></i> 
+              <p> {this.state.movieDetails.title} is in your favorite list</p>
           </div>
       )
     }
@@ -274,10 +274,10 @@ class Movie extends React.Component {
                     </div>
                     {this.renderFavoriteButton()}
                     <div className="movieRatings">
-                        <div>
+                        <div className="loggedUserRatings">
                             <h1>Your Rating:</h1> {this.renderRadialProgressBarUser()}
                         </div>
-                        <div>
+                        <div className="avgGeneralRatings">
                             <h1>Users average Rating:</h1> {this.renderRadialProgressBarGeneral()}
                         </div>
                     </div>

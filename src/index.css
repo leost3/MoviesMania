@@ -502,8 +502,9 @@ body {
   opacity: 0.4;
 }
 .movieCard img, .favoriteCard img{
-  opacity: 0.5;
+  opacity: 0.65;
   transform: scale(1.4);
+  transition: all 0.8s;
 
 }
 .movieCard img:hover, .favoriteCard img:hover{
@@ -564,11 +565,12 @@ body {
 }
 .btnIsNotFavorite {
   text-transform: uppercase;
-  cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
   font-size: 50px;
+  cursor: pointer;
+
 }
 
 .btnIsNotFavorite i{
@@ -579,13 +581,23 @@ body {
   transition: all 1s;
 }
 
+.btnIsNotFavorite p{
+  font-size: 1rem;
+  color: steelblue;
+}
+
+
 .btnIsFavorite {
   text-transform: uppercase;
-  cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
   font-size: 50px;
+}
+.btnIsFavorite p{
+  font-size: 1rem;
+  color: steelblue;
+
 }
 
 .movieDescription {
@@ -624,6 +636,13 @@ body {
   justify-content: center;
 }
 
+.loggedUserRatings,
+.avgGeneralRatings {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
 .generalVotings {
   display: flex;
@@ -695,8 +714,8 @@ body {
 
 .movieVideo {
   background: #fc2f70;
-  width: 80%;
-  height: 500px;
+  width: 100%;
+  height: 100vh;
 }
 
 .ui.embed {
