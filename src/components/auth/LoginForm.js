@@ -36,6 +36,7 @@ class LoginForm extends React.Component {
         config
       )
       .then( response => {
+        console.log(response.data)
         if (response.data.result.isLoggedIn) {
           this.props.handleLogin(true);
           localStorage.setItem("loggedIn", true);

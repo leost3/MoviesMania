@@ -11,6 +11,8 @@ class SignupForm extends React.Component {
       username: 'sa',
       password: 'sa',
       confirmPassword: 'sa',
+      userAlreadyExists: false,
+      passwordsAreEqual: true,
     }
 
 
@@ -41,39 +43,76 @@ class SignupForm extends React.Component {
       if (this.state.password === this.state.confirmPassword) return true;
     }
 
-
-    handleSubmit = (e) => {
-      e.preventDefault();
-
-        const config = {
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-      };
+    userNameAlreadyExists = () => {
       axios.post(
         'http://localhost:8181/shoppingprojectphp/api/user.php',
         {
-          action:"register",
-          
+          action:"validate",
+                    
           firstName:this.state.firstName,
           lastName:this.state.lastName,
           email:this.state.email,
           username:this.state.username,
           password:this.state.password,
           confirmPassword:this.state.confirmPassword,
+          registerSuccessful: false
         },
-        config
       )
       .then( response => {
         console.log(response)
-        if (response.data.registration === 'created') {
-          this.props.history.push(`/app/${this.state.username}`);
-          this.props.handleLogin()
-        } 
       })
       .catch( error => {
         console.log(error);
       });
     }
+
+
+    handleSubmit = (e) => {
+      e.preventDefault();
+        this.setState({passwordsAreEqual : true});
+        this.setState({userAlreadyExists : false});
+        const config = {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      };
+      if (this.doPasswordValidation()) {
+        axios.post(
+          'http://localhost:8181/shoppingprojectphp/api/user.php',
+          {
+            action:"register",
+            
+            firstName:this.state.firstName,
+            lastName:this.state.lastName,
+            email:this.state.email,
+            username:this.state.username,
+            password:this.state.password,
+            confirmPassword:this.state.confirmPassword,
+          },
+          config
+        )
+        .then( response => {
+          if (response.data.result === 'Created') {
+              this.setState({registerSuccessful: true});
+              setTimeout( () => {this.props.history.push(`/`)},3000);
+          }else{
+              console.log(response.data.split(" "));
+              console.log(response.data.split(" ").includes('SQLSTATE[23000]:'));
+              if (response.data.split(" ").includes('SQLSTATE[23000]:')) {
+                  this.setState({userAlreadyExists: true});
+              }
+          }
+        })
+        .catch( error => {
+          console.log(error);
+        });
+      }else {
+        this.setState({passwordsAreEqual: false})
+      }
+        
+      
+      
+    }
     render() {
+      console.log(this.props)
         return (
           <div className="signup_component">
           <Link to="/">Home</Link>
@@ -87,6 +126,9 @@ class SignupForm extends React.Component {
                   Confirm Password<input className="" value={this.state.confirmPassword} placeholder="Confirm your password" type="text" onChange={this.handleConfirmPasswordInput}/>
                   <button type="submit"> SignUp </button>
               </form>
+              <p>{this.state.userAlreadyExists ? "User already exists - Enter different Email/Username" : ""}</p>
+              <p>{this.state.passwordsAreEqual ? "" : "Passwords don't match"}</p>
+              <p>{this.state.registerSuccessful ? "User has been registered" : ""}</p>
           </div>
 
           </div>
