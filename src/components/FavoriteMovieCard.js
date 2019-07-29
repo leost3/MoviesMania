@@ -49,7 +49,7 @@ function FavoriteMovieCard( props ) {
             <h4>{props.favoriteMovies.title}</h4>
              
             <button className="btn_delete" onClick={removeFromFavorites}>
-                <i className="fas fa-trash">Delete</i>
+                <i className="fas fa-trash">Remove</i>
             </button>
         </div>
     )

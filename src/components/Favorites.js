@@ -45,7 +45,8 @@ class FavoritesList extends React.Component {
                   />
               ))
           )
-      }
+      }else if (this.state.favoriteMovies.length === 0) return <h1>Your List is Empty</h1>
+      
         return (
           <div className="loader_container">
             <div className="loader">

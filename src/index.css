@@ -294,6 +294,12 @@ body {
 }
 
 /* Login Header */
+.login {
+  background: orange;
+}
+.login p {
+  color: #ff0000;
+}
 
 .loginInformation {
   display: flex;
@@ -506,7 +512,9 @@ body {
   transition: all 0.8s;
 }
 
-
+.favoriteCard button {
+  background: transparent;
+}
 /* MovieDetails COmponenet */
 
 .moviePoster {

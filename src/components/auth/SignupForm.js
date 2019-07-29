@@ -94,8 +94,6 @@ class SignupForm extends React.Component {
               this.setState({registerSuccessful: true});
               setTimeout( () => {this.props.history.push(`/`)},3000);
           }else{
-              console.log(response.data.split(" "));
-              console.log(response.data.split(" ").includes('SQLSTATE[23000]:'));
               if (response.data.split(" ").includes('SQLSTATE[23000]:')) {
                   this.setState({userAlreadyExists: true});
               }

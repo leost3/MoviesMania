@@ -49,7 +49,6 @@ class Movie extends React.Component {
         config,
       )
       .then( response => {
-          console.log(response);
           this.checkIfMovieIsFavorited();
       })
       .catch( error => {
@@ -57,7 +56,6 @@ class Movie extends React.Component {
       });
     }
 
-    
     sendUserRating = (rate) => {
         const config = {
           headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -80,7 +78,7 @@ class Movie extends React.Component {
         .catch( error => {
           console.log(error);
         });
-      }
+    }
 
     getMovieAvg = () => {
       const config = {
@@ -95,8 +93,7 @@ class Movie extends React.Component {
         config
       )
       .then( response => {
-        // console.log(response);
-        this.setState({movieRateAvg: parseFloat(response.data.result['AVG(movie_rating)']).toFixed(2)});
+        this.setState({movieRateAvg: parseFloat(response.data.result['AVG(movie_rating)']).toFixed(1)});
       })
       .catch( error => {
         console.log(error);
@@ -125,10 +122,6 @@ class Movie extends React.Component {
         });
       }
 
-    // setStateUsersInfo = (userInfo) => {
-    //     this.setState({...this.state.userInfo, userInfo});
-    // }
-
     checkIfMovieIsFavorited = () => {
       axios.post(
         'http://localhost:8181/shoppingprojectphp/api/movies.php',
@@ -144,7 +137,6 @@ class Movie extends React.Component {
         console.log(error);
       });
     }
-
 
     setMovieRating = (rate) => {
         this.sendUserRating(parseInt(rate));
@@ -168,7 +160,6 @@ class Movie extends React.Component {
 
     renderRadialProgressBarUser = () => {
       if (this.state.movieRating!== undefined) {
-        console.log(this.state.movieRating)
         return (
           <div className="usersVote">
               <div className="pie-wrapper progress-half">
@@ -187,8 +178,8 @@ class Movie extends React.Component {
       return "Not voted";
     }
     renderRadialProgressBarGeneral = () => {
-      if (this.state.movieRating !== undefined) {
-        console.log(this.state.movieRateAvg)
+      console.log(typeof this.state.movieRateAvg)
+      if (this.state.movieRateAvg !== "NaN") {
         return (
           <div className="generalVotings">
               <div className="pie-wrapper progress-half">
