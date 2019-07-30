@@ -1,15 +1,16 @@
 import React from 'react';
+import size from './helpers/general';
 
 function MovieCard( props ) {
-    const size = { 
-        0: "w92",
-        1: "w154",
-        2: "w185",
-        3: "w342",
-        4: "w500",
-        5: "w780",
-        6: "original"
-    };
+    // const size = { 
+    //     0: "w92",
+    //     1: "w154",
+    //     2: "w185",
+    //     3: "w342",
+    //     4: "w500",
+    //     5: "w780",
+    //     6: "original"
+    // };
     
     // if I want to implemente fifo - linked list
 

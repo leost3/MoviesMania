@@ -3,6 +3,8 @@ import axios from 'axios';
 import Buttons from './Buttons';
 import youtube from '../api/youtube';
 import MoviesListHeader from './moviesListHeader';
+import size from './helpers/general';
+
 
 class Movie extends React.Component {
     state = {
@@ -18,17 +20,14 @@ class Movie extends React.Component {
         const movieId = this.props.match.params.movieId;
 
         const KEY = 'f94e9a18c1c262bae36e6cdc7be57a1d';
-        // const getMovieById = `https://api.themoviedb.org/3/movie/${550}?api_key=${KEY}`;
-        const getMovieDetails = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${KEY}`;
-
-        const response = await axios(getMovieDetails);
-        // const configResp = await axios(getConfig);
+        const getMovieDetailsById = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${KEY}`;
+        const response = await axios(getMovieDetailsById);
         const movieDetails = response.data;
         this.setState({...this.state.movieDetails, movieDetails});
         this.setState({userInfo:this.props.userInformation});
         this.getMovieAvg();
         this.getMovieGeneralRatingFromDb();
-        this.onTermSubmit(this.state.movieDetails.title + "movie official trailer");
+        this.requestTrailerFromYoutube(this.state.movieDetails.title + "movie official trailer");
         this.checkIfMovieIsFavorited();
     }
 
@@ -48,7 +47,8 @@ class Movie extends React.Component {
         },
         config,
       )
-      .then( response => {
+      .then( () => {
+        // Return True or False if movie is on User's favorites
           this.checkIfMovieIsFavorited();
       })
       .catch( error => {
@@ -64,7 +64,6 @@ class Movie extends React.Component {
           'http://localhost:8181/shoppingprojectphp/api/movies.php',
           {
             "action": "rateMovie",
-            // "action": "getGeneralRatings",
             "movieId": this.state.movieDetails.id,
             "userId": this.state.userInfo.userId,
             "userRate": rate,
@@ -195,7 +194,7 @@ class Movie extends React.Component {
     }
 
     
-    onTermSubmit = async (term) => {
+    requestTrailerFromYoutube = async (term) => {
       const response = await youtube.get("/search", {
         params: {
           q: term
@@ -228,7 +227,7 @@ class Movie extends React.Component {
             <button onClick={this.addToFavorites}> 
             <i className="fas fa-star"></i>
             </button>
-            <p> Add {this.state.movieDetails.title} to your favorite list</p>
+            <p> Add <span className='movieTitle'>{this.state.movieDetails.title}</span> to your favorite list</p>
           </div>
         )
       }
@@ -241,16 +240,7 @@ class Movie extends React.Component {
     }
     // btnFavorite
     render() {
-        const size = { 
-            0: "w92",
-            1: "w154",
-            2: "w185",
-            3: "w342",
-            4: "w500",
-            5: "w780",
-            6: "original"
-        };
-
+        
         const {title, overview, release_date, backdrop_path} = this.state.movieDetails;
 
         if (this.state.movieDetails) {
@@ -275,10 +265,10 @@ class Movie extends React.Component {
                     {this.renderFavoriteButton()}
                     <div className="movieRatings">
                         <div className="loggedUserRatings">
-                            <h1>Your Rating:</h1> {this.renderRadialProgressBarUser()}
+                            <h1>Your Rating</h1> {this.renderRadialProgressBarUser()}
                         </div>
                         <div className="avgGeneralRatings">
-                            <h1>Users average Rating:</h1> {this.renderRadialProgressBarGeneral()}
+                            <h1>Users average Rating</h1> {this.renderRadialProgressBarGeneral()}
                         </div>
                     </div>
                     <div className="votingBtns">

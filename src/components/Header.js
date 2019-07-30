@@ -6,7 +6,11 @@ function Header(props) {
     return (
         <div className='header'>
             {/* {renderSignUpComponent()} */}
-            <LoginForm {...props} handleLogin={props.handleLogin} getUserDetails={props.getUserDetails} loggedInStatus={props.loggedInStatus}/>
+            <LoginForm 
+            {...props} 
+            handleLogin={props.handleLogin} 
+            getUserDetails={props.getUserDetails} 
+            loggedInStatus={props.loggedInStatus}/>
         </div>
     )
 }
