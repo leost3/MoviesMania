@@ -15,7 +15,7 @@ class FavoritesList extends React.Component {
 
     retrieveFavoriteMoviesFromDB = () => {
         axios.post(
-          'http://localhost:8181/shoppingprojectphp/api/movies.php',
+          'http://localhost:8181/MoviesManiaPHP/api/movies.php',
           {
             "action": "getFavorites",
             "userId": parseInt(this.props.userInformation.userId)

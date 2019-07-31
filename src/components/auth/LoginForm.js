@@ -1,6 +1,4 @@
 import React from 'react';
-import axios from 'axios';
-
 
 
 import login from '../../api/Database';
@@ -66,7 +64,7 @@ class LoginForm extends React.Component {
                         placeholder="password" 
                         type="text" 
                         onChange={this.handlePasswordInput}/>
-                    <button type="submit"> Login </button>
+                    <button type="submit"> Sign In </button>
                 </form>
                 <p>{this.state.matchData ? "" : "Invalid Username/Password"}</p>
             </div>
@@ -81,7 +79,6 @@ class LoginForm extends React.Component {
           </div>
         )
     }
-
 
     render() {
         return (

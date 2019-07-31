@@ -47,7 +47,7 @@ class MoviesList extends React.Component{
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       };
       axios.post(
-        'http://localhost:8181/shoppingprojectphp/api/movies.php',
+        'http://localhost:8181/MoviesManiaPHP/api/movies.php',
         {
           "action": "getAllRatings"
         },

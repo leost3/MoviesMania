@@ -37,7 +37,7 @@ class Movie extends React.Component {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       };
       axios.post(
-        'http://localhost:8181/shoppingprojectphp/api/movies.php',
+        'http://localhost:8181/MoviesManiaPHP/api/movies.php',
         {
           "action": "addToFavorites",
           "movieId": this.state.movieDetails.id,
@@ -61,7 +61,7 @@ class Movie extends React.Component {
           headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         };
         axios.post(
-          'http://localhost:8181/shoppingprojectphp/api/movies.php',
+          'http://localhost:8181/MoviesManiaPHP/api/movies.php',
           {
             "action": "rateMovie",
             "movieId": this.state.movieDetails.id,
@@ -84,7 +84,7 @@ class Movie extends React.Component {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       };
       axios.post(
-        'http://localhost:8181/shoppingprojectphp/api/movies.php',
+        'http://localhost:8181/MoviesManiaPHP/api/movies.php',
         {
           "action": "getAvg",
           "movieId": this.state.movieDetails.id,
@@ -105,7 +105,7 @@ class Movie extends React.Component {
           headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         };
         axios.post(
-          'http://localhost:8181/shoppingprojectphp/api/movies.php',
+          'http://localhost:8181/MoviesManiaPHP/api/movies.php',
           {
             "action": "getRatings",
             "movieId": this.state.movieDetails.id,
@@ -123,7 +123,7 @@ class Movie extends React.Component {
 
     checkIfMovieIsFavorited = () => {
       axios.post(
-        'http://localhost:8181/shoppingprojectphp/api/movies.php',
+        'http://localhost:8181/MoviesManiaPHP/api/movies.php',
         {
           "action": "isFavorite",
           "movieId": parseInt(this.state.movieDetails.id)
@@ -221,11 +221,13 @@ class Movie extends React.Component {
     }
 
     renderFavoriteButton = () => {
+      console.log(this.state.isFavorite)
       if (!this.state.isFavorite) {
         return (
           <div className="btnIsNotFavorite">
             <button onClick={this.addToFavorites}> 
-            <i className="fas fa-star"></i>
+              <i className="fas fa-star"></i>
+              {/* Add to favorites */}
             </button>
             <p> Add <span className='movieTitle'>{this.state.movieDetails.title}</span> to your favorite list</p>
           </div>
@@ -233,9 +235,9 @@ class Movie extends React.Component {
       }
       return (
         <div className="btnIsFavorite">
-              <i className="fas fa-star"></i> 
-              <p> {this.state.movieDetails.title} is in your favorite list</p>
-          </div>
+            <i className="fas fa-star"></i> 
+            <p> {this.state.movieDetails.title} is in your favorite list</p>
+        </div>
       )
     }
     // btnFavorite
