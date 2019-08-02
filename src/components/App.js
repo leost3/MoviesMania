@@ -32,6 +32,7 @@ class App extends React.Component {
     this.setState({...this.state.detailedMovie, detailedMovie});
   }
 
+  // Gets userId and username and updates state
   getUserDetails = () => {
     const userId = localStorage.getItem("userId");
     const username = localStorage.getItem("username");

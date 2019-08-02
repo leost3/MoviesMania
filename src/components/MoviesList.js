@@ -24,9 +24,10 @@ class MoviesList extends React.Component{
         const getMovieByTrend = `https://api.themoviedb.org/3/trending/${movies}/day?api_key=${KEY}`;
         // const getConfig = `https://api.themoviedb.org/3/configuration?api_key=${KEY}`;
         const response = await axios(getMovieByTrend);
+        console.log(response)
         // const configResp = await axios(getConfig);
         const data = response.data;
-        this.setState({...this.state, moviesList:data.results});
+        this.setState({...this.state.moviesList, moviesList:data.results});
         this.getMovieGeneralRatingFromDb();
     }
 
