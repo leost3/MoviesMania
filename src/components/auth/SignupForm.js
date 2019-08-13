@@ -17,31 +17,7 @@ class SignupForm extends React.Component {
 
     handleInput = e => {
       const {name, value} = e.target;
-      console.log(name)
-      this.setState({})
-    }
-
-    handleFirstnameInput = (e) => {
-      this.setState({...this.state, firstName:e.target.value});
-    }
-
-    handleLastNameInput = (e) => {
-      this.setState({...this.state, lastName:e.target.value});
-    }
-
-    handleEmailInput = (e) => {
-      this.setState({...this.state, email:e.target.value});
-    }
-
-    handleUsernameInput = (e) => {
-      this.setState({...this.state, username:e.target.value});
-    }
-    handlePasswordInput = (e) => {
-      this.setState({...this.state, password:e.target.value});
-    }
-    
-    handleConfirmPasswordInput = e => {
-      this.setState({...this.state, confirmPassword:e.target.value});
+      this.setState({[name]: value});
     }
 
     doPasswordValidation = () => {
@@ -109,7 +85,7 @@ class SignupForm extends React.Component {
                     <form className='sigupForm' onSubmit={this.handleSubmit}>
                         First Name
                         <input 
-                            className="" 
+                            name="firstName" 
                             value={this.state.firstName} 
                             placeholder="first name" 
                             type="text" 
@@ -117,7 +93,7 @@ class SignupForm extends React.Component {
                         />
                         Last Name
                         <input 
-                            className="" 
+                            name="lastName" 
                             value={this.state.lastName} 
                             placeholder="last name" 
                             type="text" 
@@ -125,7 +101,7 @@ class SignupForm extends React.Component {
                         />
                         Email Address
                         <input 
-                            className="" 
+                            name="email" 
                             value={this.state.email} 
                             placeholder="email" 
                             type="text" 
@@ -133,7 +109,7 @@ class SignupForm extends React.Component {
                         />
                         Username
                         <input 
-                            className="" 
+                            name="username" 
                             value={this.state.username} 
                             placeholder="username" 
                             type="text" 
@@ -141,7 +117,7 @@ class SignupForm extends React.Component {
                         />
                         Password
                         <input 
-                            className="" 
+                            name="password" 
                             value={this.state.password} 
                             placeholder="password" 
                             type="text" 
@@ -149,7 +125,7 @@ class SignupForm extends React.Component {
                         />
                         Confirm Password
                         <input 
-                            className=""  
+                            name="confirmPassword"  
                             value={this.state.confirmPassword} 
                             placeholder="Confirm your password" 
                             type="text" 

@@ -1,23 +1,25 @@
 import React from 'react'
 
-export default function Form({loggedInStatus,handleSubmit,username,handleUsernameInput,password,handlePasswordInput,matchData, handleLogOut}) {
+export default function Form({loggedInStatus,handleSubmit,username,handleInput,password, matchData, handleLogOut}) {
     if (!loggedInStatus) {
         return (
             <div className='login'>
                 <form onSubmit={handleSubmit} className='loginForm'>
                     <input 
+                        name="username"
                         className="" 
                         value={username} 
                         placeholder="username" 
                         type="text" 
-                        onChange={handleUsernameInput}
-                    />
+                        onChange={handleInput}
+                        />
                     <input 
+                        name="password"
                         className="" 
                         value={password} 
                         placeholder="password" 
                         type="text" 
-                        onChange={handlePasswordInput}
+                        onChange={handleInput}
                     />
                     <button type="submit"> Sign In </button>
                 </form>
