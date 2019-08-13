@@ -38,7 +38,6 @@ class FavoritesList extends React.Component {
           return (
               this.state.favoriteMovies.map(movie => (
                   <FavoriteMovieCard  
-                      {...this.props} 
                       favoriteMovies={movie}
                       key={movie.movieId}
                       updateFavoriteMovies={this.updateFavoriteMovies}

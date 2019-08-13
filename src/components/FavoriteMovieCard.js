@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
+
 
 function FavoriteMovieCard( props ) {
     const size = { 
@@ -55,4 +57,4 @@ function FavoriteMovieCard( props ) {
     )
 }
 
-export default FavoriteMovieCard;
+export default withRouter(FavoriteMovieCard);

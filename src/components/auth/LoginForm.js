@@ -1,7 +1,7 @@
 import React from 'react';
 import Form from './Form';
 
-import login from '../../api/Database';
+import PostRequest from '../../api/Database';
 
 class LoginForm extends React.Component {
     state = {
@@ -24,7 +24,7 @@ class LoginForm extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        login.post('/user.php', {
+        PostRequest.post('/user.php', {
             "action":"login",
             "username":this.state.username,
             "password":this.state.password,

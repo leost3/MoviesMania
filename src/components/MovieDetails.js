@@ -4,7 +4,7 @@ import Buttons from './Buttons';
 import youtube from '../api/youtube';
 import MoviesListHeader from './moviesListHeader';
 import size from './helpers/general';
-
+import { withRouter } from 'react-router-dom';
 
 class Movie extends React.Component {
     state = {
@@ -291,4 +291,4 @@ class Movie extends React.Component {
     }
 }
 
-export default Movie;
+export default withRouter(Movie);

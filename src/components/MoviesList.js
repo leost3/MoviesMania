@@ -2,6 +2,9 @@ import React from 'react'
 import axios from 'axios';
 import MovieCard from './MovieCard';
 import MoviesListHeader from './moviesListHeader';
+import PostRequest from '../api/Database';
+import Input from './Input';
+import { withRouter } from 'react-router-dom';
 
 class MoviesList extends React.Component{
 // APIKEYIMDB = 7605e85c
@@ -17,7 +20,7 @@ class MoviesList extends React.Component{
     async componentDidMount() {
         // const allTypes = 'all';
         // const series = 'series';
-        
+        console.log(this.props)
         const movies = 'movie';
         const KEY = 'f94e9a18c1c262bae36e6cdc7be57a1d';
         // const getMovieById = `https://api.themoviedb.org/3/movie/550?api_key=${KEY}`;
@@ -33,7 +36,7 @@ class MoviesList extends React.Component{
 
     //This function is shared between MoviesList and MovieDetails components
 
-    handleChange = (e) => {
+    handleInputChange = (e) => {
         this.setState({term:e.target.value});
     }
 
@@ -44,18 +47,12 @@ class MoviesList extends React.Component{
     }
     // Get all ratings of customers
     getMovieGeneralRatingFromDb = () => {
-      const config = {
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-      };
-      axios.post(
-        'http://localhost:8181/MoviesManiaPHP/api/movies.php',
+        PostRequest.post('/user.php',
         {
           "action": "getAllRatings"
         },
-        config
       )
       .then( response => {
-        // console.log("resp", response.data);
         this.setState({...this.state.moviesRatings, moviesRatings:response.data});
       })
       .catch( error => {
@@ -87,24 +84,16 @@ class MoviesList extends React.Component{
             </div>
         )
     }
-
     render() {
         return (
             <div className="moviesListPage">
                 <div className="movieList_header">
                     <MoviesListHeader {...this.props} />
                 </div>
-                <div className="inputSearch">
-                    <input type='text'
-                        onChange={this.handleChange}
-                        value={this.state.term}
-                    />
-                    <span className="bottom"></span>
-                    <span className="right"></span>
-                    <span className="top"></span>
-                    <span className="left"></span>
-                </div>
-                
+                <Input 
+                    handleInputChange={this.handleInputChange}  
+                    term={this.state.term}
+                />
                 <div className="moviesList">
                     {this.renderMovies()}
                 </div>
@@ -114,4 +103,4 @@ class MoviesList extends React.Component{
 }
 
 
-export default MoviesList;
+export default withRouter(MoviesList);

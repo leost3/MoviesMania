@@ -23,12 +23,12 @@ class App extends React.Component {
     this.setState({isLoggedIn}); 
   }
 
+  // On Login Form if user exists and password matched on DB login will be perfomed and user will be redirected
   handleLogin = () => {
     this.setState({isLoggedIn: true});
   }
 
   getMovieDetails = (detailedMovie) => {
-
     this.setState({...this.state.detailedMovie, detailedMovie});
   }
 
@@ -45,41 +45,38 @@ class App extends React.Component {
             <Router>
                 <div>
                     <Switch>
-                        {/* <Route path='/app/:appname' exact render={({match})=>(this.state.loggedIn ? ( <App params={match} />) : (< Redirect to='/' />))}/> */}
                         <Route path='/app/movies' exact render={ props => (
-                          this.state.isLoggedIn ?
-                          ( 
-                            <MoviesList {...props} 
-                            loggedInStatus={this.state.isLoggedIn} 
-                            getMovieDetails={this.getDetails}
-                            userInformation={this.state.userInformation}
-                            /> 
+                            this.state.isLoggedIn ?
+                            ( 
+                                <MoviesList 
+                                    loggedInStatus={this.state.isLoggedIn} 
+                                    getMovieDetails={this.getDetails}
+                                    userInformation={this.state.userInformation}
+                                /> 
                             )
                             :
                             (
-                              <Redirect to='/' />
-                              )
-                              )} 
+                                <Redirect to='/' />
+                            )
+                        )} 
                         />
                         <Route path='/' exact strict render={ props => (
-                          this.state.isLoggedIn ?(<Redirect to='app/movies' />) : (
-                            <Home  {...props} 
-                              loggedInStatus={this.state.isLoggedIn}
-                              handleLogin={this.handleLogin}
-                              getUserDetails={this.getUserDetails}
-                            />
-                            // <Header handleLogin={this.handleLogin} loggedInStatus={this.state.isLoggedIn} getUserDetails={this.getUserDetails}/>
-                          ) 
-                          
+                            this.state.isLoggedIn ?(<Redirect to='app/movies' />) : (
+                              <Home 
+                                loggedInStatus={this.state.isLoggedIn}
+                                handleLogin={this.handleLogin}
+                                getUserDetails={this.getUserDetails}
+                              />
+                            ) 
                         )} 
                         />
-                        <Route path='/signup' render={ props => (
-                            <SignupForm {...props} handleLogin={this.handleLogin} />
+                        <Route path='/signup' render={ () => (
+                            <SignupForm handleLogin={this.handleLogin} />
                         )} 
                         />
-                        <Route path='/app/movies/:movieId' render={ props => (
+                        <Route path='/app/movies/:movieId' render={ () => (
                            this.state.isLoggedIn ? (
-                              <MovieDetails {...props} 
+                              <MovieDetails 
                                 handleLogin={this.handleLogin} 
                                 movieDetails={this.state.detailedMovie } 
                                 userInformation={this.state.userInformation}
@@ -89,9 +86,9 @@ class App extends React.Component {
                         )} 
                         />
                         <Route path='/app/:userid/favorites' render = { 
-                          props => (
+                          () => (
                             this.state.isLoggedIn ? (
-                              <Favorites {...props}
+                              <Favorites 
                                   userInformation={this.state.userInformation}
                                   loggedInStatus={this.state.isLoggedIn}
                               />
@@ -105,33 +102,7 @@ class App extends React.Component {
             </Router>
         </div>
     )
-}
-
+  }
 }
 
 export default App;
-
-
-
-// getList = () => {
-//   // console.log("list")
-//   if (this.state) {
-//     let bodyFormData = new FormData();
-//     bodyFormData.append("action", "list");
-//     const config = {
-//       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-//     };
-//     axios.post(
-//       'http://localhost:8181/shoppingprojectphp/api/cars.php', 
-//       bodyFormData,
-//       config
-//     )
-//     .then( response => {
-//       // console.log(response.data);
-//       this.setState({cars: response.data.result});
-//     })
-//     .catch( error => {
-//       console.log(error);
-//     });
-//   }
-// }

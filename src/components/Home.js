@@ -1,6 +1,7 @@
 import React from 'react'
 import LandingPage from './LandingPage';
 import Header from './Header';
+import { withRouter } from 'react-router-dom';
 
 function Home({loggedInStatus, handleLogin, getUserDetails}) {
 
@@ -18,4 +19,4 @@ function Home({loggedInStatus, handleLogin, getUserDetails}) {
     )
 }
 
-export default Home;
+export default withRouter(Home);

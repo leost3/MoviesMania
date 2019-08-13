@@ -1,7 +1,6 @@
 import React from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-// import { Redirect } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import PostRequest from '../../api/Database';
 
 class SignupForm extends React.Component {
     state = {
@@ -15,6 +14,12 @@ class SignupForm extends React.Component {
       passwordsAreEqual: true,
     }
 
+
+    handleInput = e => {
+      const {name, value} = e.target;
+      console.log(name)
+      this.setState({})
+    }
 
     handleFirstnameInput = (e) => {
       this.setState({...this.state, firstName:e.target.value});
@@ -44,11 +49,9 @@ class SignupForm extends React.Component {
     }
 
     userNameAlreadyExists = () => {
-      axios.post(
-        'http://localhost:8181/shoppingprojectphp/api/user.php',
+        PostRequest.post('/user.php',
         {
           action:"validate",
-                    
           firstName:this.state.firstName,
           lastName:this.state.lastName,
           email:this.state.email,
@@ -71,67 +74,96 @@ class SignupForm extends React.Component {
       e.preventDefault();
         this.setState({passwordsAreEqual : true});
         this.setState({userAlreadyExists : false});
-        const config = {
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-      };
-      if (this.doPasswordValidation()) {
-        axios.post(
-          'http://localhost:8181/shoppingprojectphp/api/user.php',
-          {
-            action:"register",
-            
-            firstName:this.state.firstName,
-            lastName:this.state.lastName,
-            email:this.state.email,
-            username:this.state.username,
-            password:this.state.password,
-            confirmPassword:this.state.confirmPassword,
-          },
-          config
-        )
-        .then( response => {
-          if (response.data.result === 'Created') {
-              this.setState({registerSuccessful: true});
-              setTimeout( () => {this.props.history.push(`/`)},3000);
-          }else{
-              if (response.data.split(" ").includes('SQLSTATE[23000]:')) {
+        if (this.doPasswordValidation()) {
+            PostRequest.post('/user.php',
+            {
+              action:"register",
+              firstName:this.state.firstName,
+              lastName:this.state.lastName,
+              email:this.state.email,
+              username:this.state.username,
+              password:this.state.password,
+              confirmPassword:this.state.confirmPassword,
+            }
+          )
+          .then( response => {
+              if (response.data.result === 'Created') {
+                  this.setState({registerSuccessful: true});
+                  setTimeout( () => {this.props.history.push(`/`)},3000);
+              }else if (response.data.split(" ").includes('SQLSTATE[23000]:')) {
                   this.setState({userAlreadyExists: true});
               }
-          }
-        })
-        .catch( error => {
-          console.log(error);
-        });
-      }else {
-        this.setState({passwordsAreEqual: false})
-      }
-        
-      
-      
+          })
+          .catch( error => {
+              console.log(error);
+          });
+        }else {
+          this.setState({passwordsAreEqual: false})
+        }
     }
     render() {
-      console.log(this.props)
         return (
-          <div className="signup_component">
-          <Link to="/">Home</Link>
-          <div className='signup'>
-              <form className='sigupForm' onSubmit={this.handleSubmit}>
-                  First Name<input className="" value={this.state.firstName} placeholder="first name" type="text" onChange={this.handleFirstnameInput}/>
-                  Last Name<input className="" value={this.state.lastName} placeholder="last name" type="text" onChange={this.handleLastNameInput}/>
-                  Email Address<input className="" value={this.state.email} placeholder="email" type="text" onChange={this.handleEmailInput}/>
-                  Username<input className="" value={this.state.username} placeholder="username" type="text" onChange={this.handleUsernameInput}/>
-                  Password<input className="" value={this.state.password} placeholder="password" type="text" onChange={this.handlePasswordInput}/>
-                  Confirm Password<input className="" value={this.state.confirmPassword} placeholder="Confirm your password" type="text" onChange={this.handleConfirmPasswordInput}/>
-                  <button type="submit"> SignUp </button>
-              </form>
-              <p>{this.state.userAlreadyExists ? "User already exists - Enter different Email/Username" : ""}</p>
-              <p>{this.state.passwordsAreEqual ? "" : "Passwords don't match"}</p>
-              <p>{this.state.registerSuccessful ? "User has been registered" : ""}</p>
-          </div>
-
+            <div className="signup_component">
+                <Link to="/">Home</Link>
+                <div className='signup'>
+                    <form className='sigupForm' onSubmit={this.handleSubmit}>
+                        First Name
+                        <input 
+                            className="" 
+                            value={this.state.firstName} 
+                            placeholder="first name" 
+                            type="text" 
+                            onChange={this.handleInput}
+                        />
+                        Last Name
+                        <input 
+                            className="" 
+                            value={this.state.lastName} 
+                            placeholder="last name" 
+                            type="text" 
+                            onChange={this.handleInput}
+                        />
+                        Email Address
+                        <input 
+                            className="" 
+                            value={this.state.email} 
+                            placeholder="email" 
+                            type="text" 
+                            onChange={this.handleInput}
+                        />
+                        Username
+                        <input 
+                            className="" 
+                            value={this.state.username} 
+                            placeholder="username" 
+                            type="text" 
+                            onChange={this.handleInput}
+                        />
+                        Password
+                        <input 
+                            className="" 
+                            value={this.state.password} 
+                            placeholder="password" 
+                            type="text" 
+                            onChange={this.handleInput}
+                        />
+                        Confirm Password
+                        <input 
+                            className=""  
+                            value={this.state.confirmPassword} 
+                            placeholder="Confirm your password" 
+                            type="text" 
+                            onChange={this.handleInput}
+                        />
+                        <button type="submit"> SignUp </button>
+                    </form>
+                    <p>{this.state.userAlreadyExists ? "User already exists - Enter different Email/Username" : ""}</p>
+                    <p>{this.state.passwordsAreEqual ? "" : "Passwords don't match"}</p>
+                    <p>{this.state.registerSuccessful ? "User has been registered" : ""}</p>
+                </div>
           </div>
         )
     }
 }
 
-export default SignupForm;
+export default withRouter(SignupForm);
