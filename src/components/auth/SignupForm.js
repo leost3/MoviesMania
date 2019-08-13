@@ -133,9 +133,9 @@ class SignupForm extends React.Component {
                         />
                         <button type="submit"> SignUp </button>
                     </form>
-                    <p>{this.state.userAlreadyExists ? "User already exists - Enter different Email/Username" : ""}</p>
-                    <p>{this.state.passwordsAreEqual ? "" : "Passwords don't match"}</p>
-                    <p>{this.state.registerSuccessful ? "User has been registered" : ""}</p>
+                    <p>{this.state.userAlreadyExists  ? "User already exists - Enter different Email/Username" : null}</p>
+                    <p>{this.state.passwordsAreEqual  ? null : "Passwords don't match"}</p>
+                    <p>{this.state.registerSuccessful ? "User has been registered" : null}</p>
                 </div>
           </div>
         )

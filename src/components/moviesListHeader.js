@@ -1,5 +1,7 @@
 import React from 'react'
 import LoginForm from './auth/LoginForm';
+import { withRouter } from 'react-router-dom';
+
 
 class MoviesListHeader extends React.Component {
 
@@ -26,4 +28,4 @@ class MoviesListHeader extends React.Component {
     }
 }
 
-export default MoviesListHeader;
+export default withRouter(MoviesListHeader);

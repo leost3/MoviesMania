@@ -30,7 +30,7 @@ class LoginForm extends React.Component {
         })
         .then( response => {
             if (response.data.result.isLoggedIn) {
-                //   Will do the login
+                // Will do the login
                 this.props.handleLogin(true);
                 localStorage.setItem("loggedIn", true);
                 localStorage.setItem("userId", response.data.result.userId);
@@ -46,8 +46,6 @@ class LoginForm extends React.Component {
             console.log(error);
         });
     }
-
-    
 
     render() {
         return (

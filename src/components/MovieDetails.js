@@ -3,8 +3,12 @@ import axios from 'axios';
 import Buttons from './Buttons';
 import youtube from '../api/youtube';
 import MoviesListHeader from './moviesListHeader';
+import PostRequest from '../api/Database';
 import size from './helpers/general';
 import { withRouter } from 'react-router-dom';
+import  ProgressBar  from './PrograssBar';
+import FavoriteButton from './FavoriteButton';
+
 
 class Movie extends React.Component {
     state = {
@@ -18,7 +22,6 @@ class Movie extends React.Component {
 
     async componentDidMount() {
         const movieId = this.props.match.params.movieId;
-
         const KEY = 'f94e9a18c1c262bae36e6cdc7be57a1d';
         const getMovieDetailsById = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${KEY}`;
         const response = await axios(getMovieDetailsById);
@@ -33,11 +36,8 @@ class Movie extends React.Component {
 
     // Send movie to favorites list
     addToFavorites = () => {
-      const config = {
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-      };
-      axios.post(
-        'http://localhost:8181/MoviesManiaPHP/api/movies.php',
+      PostRequest.post(
+        '/movies.php',
         {
           "action": "addToFavorites",
           "movieId": this.state.movieDetails.id,
@@ -45,11 +45,11 @@ class Movie extends React.Component {
           "poster_path": this.state.movieDetails.poster_path,
           "userId": parseInt(this.state.userInfo.userId)
         },
-        config,
       )
       .then( () => {
         // Return True or False if movie is on User's favorites
-          this.checkIfMovieIsFavorited();
+          // this.checkIfMovieIsFavorited();
+          this.setState({ isFavorite: true});
       })
       .catch( error => {
         console.log(error);
@@ -57,18 +57,15 @@ class Movie extends React.Component {
     }
 
     sendUserRating = (rate) => {
-        const config = {
-          headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        };
-        axios.post(
-          'http://localhost:8181/MoviesManiaPHP/api/movies.php',
+      
+      PostRequest.post(
+        '/movies.php',
           {
             "action": "rateMovie",
             "movieId": this.state.movieDetails.id,
             "userId": this.state.userInfo.userId,
             "userRate": rate,
           },
-          config,
         )
         .then( response => {
             this.setState({...this.state.movieRating, movieRating:response.data.result[0]});
@@ -80,16 +77,12 @@ class Movie extends React.Component {
     }
 
     getMovieAvg = () => {
-      const config = {
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-      };
-      axios.post(
-        'http://localhost:8181/MoviesManiaPHP/api/movies.php',
+      PostRequest.post(
+        '/movies.php',
         {
           "action": "getAvg",
           "movieId": this.state.movieDetails.id,
         },
-        config
       )
       .then( response => {
         this.setState({movieRateAvg: parseFloat(response.data.result['AVG(movie_rating)']).toFixed(1)});
@@ -101,17 +94,13 @@ class Movie extends React.Component {
 
 
     getMovieGeneralRatingFromDb = () => {
-        const config = {
-          headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        };
-        axios.post(
-          'http://localhost:8181/MoviesManiaPHP/api/movies.php',
+        PostRequest.post(
+          '/movies.php',
           {
             "action": "getRatings",
             "movieId": this.state.movieDetails.id,
             "userId": this.state.userInfo.userId,
           },
-          config
         )
         .then( response => {
           this.setState({...this.state, movieRating: response.data.result[0]});
@@ -122,8 +111,8 @@ class Movie extends React.Component {
       }
 
     checkIfMovieIsFavorited = () => {
-      axios.post(
-        'http://localhost:8181/MoviesManiaPHP/api/movies.php',
+      PostRequest.post(
+        '/movies.php',
         {
           "action": "isFavorite",
           "movieId": parseInt(this.state.movieDetails.id)
@@ -161,13 +150,7 @@ class Movie extends React.Component {
       if (this.state.movieRating!== undefined) {
         return (
           <div className="usersVote">
-              <div className="pie-wrapper progress-half">
-                  <span className="label">{this.state.movieRating.movie_rating}<em></em></span>
-                  <div className="pie">
-                    <div className="left-side half-circle"></div>
-                    <div className="right-side half-circle"></div>
-                  </div>  
-              </div>
+              <ProgressBar rating={this.state.movieRating.movie_rating}/>
               <div>
                   <p>Thanks for your vote!</p>
               </div>
@@ -180,13 +163,7 @@ class Movie extends React.Component {
       if (this.state.movieRateAvg !== "NaN") {
         return (
           <div className="generalVotings">
-              <div className="pie-wrapper progress-half">
-                <span className="label">{this.state.movieRateAvg}<em></em></span>
-                <div className="pie">
-                  <div className="left-side half-circle"></div>
-                  <div className="right-side half-circle"></div>
-                </div>  
-              </div>
+              <ProgressBar rating={this.state.movieRateAvg}/> 
           </div>
         )
       }
@@ -221,26 +198,26 @@ class Movie extends React.Component {
     }
 
     renderFavoriteButton = () => {
-      console.log(this.state.isFavorite)
-      if (!this.state.isFavorite) {
-        return (
-          <div className="btnIsNotFavorite">
-            <button onClick={this.addToFavorites}> 
-              <i className="fas fa-star"></i>
-              {/* Add to favorites */}
-            </button>
-            <p> Add <span className='movieTitle'>{this.state.movieDetails.title}</span> to your favorite list</p>
-          </div>
-        )
-      }
-      return (
-        <div className="btnIsFavorite">
-            <i className="fas fa-star"></i> 
-            <p> {this.state.movieDetails.title} is in your favorite list</p>
-        </div>
-      )
+      
+      // if (!this.state.isFavorite) {
+      //   return (
+      //     <div className="btnIsNotFavorite">
+      //       <button onClick={this.addToFavorites}> 
+      //         <i className="fas fa-star"></i>
+      //       </button>
+      //       <p> Add <span className='movieTitle'>{this.state.movieDetails.title}</span> to your favorite list</p>
+      //     </div>
+      //   )
+      // }
+      // return (
+      //   <div className="btnIsFavorite">
+      //       <i className="fas fa-star"></i> 
+      //       <p> {this.state.movieDetails.title} is in your favorite list</p>
+      //   </div>
+      // )
     }
-    // btnFavorite
+
+
     render() {
         
         const {title, overview, release_date, backdrop_path} = this.state.movieDetails;
@@ -248,7 +225,7 @@ class Movie extends React.Component {
         if (this.state.movieDetails) {
             return (
                 <div className="movieDetails_page">
-                    <MoviesListHeader {...this.props} />
+                    <MoviesListHeader />
                     <div>
                         <img 
                             className="moviePoster" 
@@ -264,7 +241,12 @@ class Movie extends React.Component {
                         <h2>Release Date </h2>
                         <p>{release_date}</p>
                     </div>
-                    {this.renderFavoriteButton()}
+                    <FavoriteButton 
+                      isFavorite={this.state.isFavorite}
+                      addToFavorites={this.addToFavorites}
+                      title={this.state.movieDetails.title}
+                    />
+                    {/* {this.renderFavoriteButton()} */}
                     <div className="movieRatings">
                         <div className="loggedUserRatings">
                             <h1>Your Rating</h1> {this.renderRadialProgressBarUser()}
