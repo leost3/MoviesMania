@@ -1,31 +1,27 @@
-import React from 'react'
+import React from 'react';
 import LoginForm from './auth/LoginForm';
 import { withRouter } from 'react-router-dom';
 
+const MoviesListHeader = ({userId, loggedInStatus, history}) => {
+  const goToFavorites = () => {
+    history.push(
+      `/app/${userId}/favorites`
+    );
+  };
 
-class MoviesListHeader extends React.Component {
+  const goToHome = () => {
+    history.push(`/app/movies`);
+  };
 
-    goToFavorites = () => {
-        this.props.history.push(`/app/${this.props.userInformation.userId}/favorites`);
-    }
-    
-    goToHome = () => {
-        this.props.history.push(`/app/movies`);
-    }
-
-    render() {
-        return (
-            <div className='navbar'>
-                <div className="navLinks">
-                    <button onClick={this.goToHome}>Home</button>
-                    <button onClick={this.goToFavorites}>
-                        Favorites
-                    </button>
-                </div>
-                <LoginForm loggedInStatus={this.props.loggedInStatus} />
-            </div>
-        )
-    }
-}
+  return (
+    <div className='navbar'>
+      <div className='navLinks'>
+        <button onClick={goToHome}>Home</button>
+        <button onClick={goToFavorites}>Favorites</button>
+      </div>
+      <LoginForm loggedInStatus={loggedInStatus} />
+    </div>
+  );
+};
 
 export default withRouter(MoviesListHeader);

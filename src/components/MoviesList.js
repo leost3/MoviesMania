@@ -20,14 +20,12 @@ class MoviesList extends React.Component{
     async componentDidMount() {
         // const allTypes = 'all';
         // const series = 'series';
-        console.log(this.props)
         const movies = 'movie';
         const KEY = 'f94e9a18c1c262bae36e6cdc7be57a1d';
         // const getMovieById = `https://api.themoviedb.org/3/movie/550?api_key=${KEY}`;
         const getMovieByTrend = `https://api.themoviedb.org/3/trending/${movies}/day?api_key=${KEY}`;
         // const getConfig = `https://api.themoviedb.org/3/configuration?api_key=${KEY}`;
         const response = await axios(getMovieByTrend);
-        console.log(response)
         // const configResp = await axios(getConfig);
         const data = response.data;
         this.setState({...this.state.moviesList, moviesList:data.results});
