@@ -74,6 +74,7 @@ class MoviesList extends React.Component {
     );
   };
   render() {
+    console.log('helloooooo')
     return (
       <div className='moviesListPage'>
         <div className='movieList_header'>

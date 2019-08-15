@@ -16,6 +16,7 @@ class App extends React.Component {
   };
 
   componentDidMount() {
+    console.log(localStorage)
     const isLoggedIn =
       localStorage.getItem('loggedIn') === 'true' ? true : false;
     this.getUserDetails();
@@ -44,13 +45,12 @@ class App extends React.Component {
   };
 
   render() {
-    console.log(this.state.userInformation)
     return (
       <div>
         <Switch>
           <Route
-            path='/app/movies'
             exact
+            path='/app/movies'
             render={() =>
               this.state.isLoggedIn ? (
                 <MoviesList
@@ -80,6 +80,7 @@ class App extends React.Component {
               )
             }
           />
+          {/* <Route exact path='/app/movies' component={}/> */}
           <Route
             path='/signup'
             render={() => <SignupForm handleLogin={this.handleLogin} />}
