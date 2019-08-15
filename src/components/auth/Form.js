@@ -23,7 +23,7 @@ export default function Form({loggedInStatus,handleSubmit,username,handleInput,p
                     />
                     <button type="submit"> Sign In </button>
                 </form>
-                <p>{matchData ? "" : "Invalid Username/Password"}</p>
+                <p>{matchData ? null : "Invalid Username/Password"}</p>
             </div>
         )
     }

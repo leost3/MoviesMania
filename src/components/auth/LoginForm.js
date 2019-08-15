@@ -18,9 +18,16 @@ class LoginForm extends React.Component {
     this.setState({ [name]: value });
   };
 
-  handleLogOut = () => {
+  handleLogOut = e => {
+    e.preventDefault();
     // When user logs out all their information is lost
-    localStorage.clear();
+    // console.log(this.props.handleLogin)
+
+    this.props.handleLogin(false);
+    // localStorage.setItem('loggedIn', 'false');
+    // localStorage.setItem('userId', null);
+    // localStorage.setItem('username', null);
+    // localStorage.clear();
   };
 
   handleSubmit = e => {

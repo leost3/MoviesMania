@@ -29,7 +29,6 @@ function FavoriteMovieCard(props) {
         },
       )
       .then(response => {
-        console.log(response);
         props.updateFavoriteMovies();
       })
       .catch(error => {

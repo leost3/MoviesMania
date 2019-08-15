@@ -12,7 +12,7 @@ class App extends React.Component {
   state = {
     isLoggedIn: false,
     detailedMovie: [],
-    userInformation: {}
+    userInformation: null,
   };
 
   componentDidMount() {
@@ -23,8 +23,13 @@ class App extends React.Component {
   }
 
   // On Login Form if user exists and password matched on DB login will be perfomed and user will be redirected
-  handleLogin = () => {
-    this.setState({ isLoggedIn: true });
+  handleLogin = (bool) => {
+    this.setState({ isLoggedIn: bool });
+    if (!bool) {
+      localStorage.setItem('loggedIn', 'false');
+      localStorage.setItem('userId', null);
+      localStorage.setItem('username', null);
+    }
   };
 
   getMovieDetails = detailedMovie => {
@@ -39,6 +44,7 @@ class App extends React.Component {
   };
 
   render() {
+    console.log(this.state.userInformation)
     return (
       <div>
         <Switch>
@@ -48,6 +54,7 @@ class App extends React.Component {
             render={() =>
               this.state.isLoggedIn ? (
                 <MoviesList
+                  handleLogin={this.handleLogin}
                   loggedInStatus={this.state.isLoggedIn}
                   getMovieDetails={this.getDetails}
                   userInformation={this.state.userInformation}

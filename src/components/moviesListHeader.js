@@ -2,7 +2,7 @@ import React from 'react';
 import LoginForm from './auth/LoginForm';
 import { withRouter } from 'react-router-dom';
 
-const MoviesListHeader = ({ userId, loggedInStatus, history }) => {
+const MoviesListHeader = ({ userId, loggedInStatus, history, handleLogin }) => {
   const goToFavorites = () => {
     history.push(`/app/${userId}/favorites`);
   };
@@ -17,7 +17,10 @@ const MoviesListHeader = ({ userId, loggedInStatus, history }) => {
         <button onClick={goToHome}>Home</button>
         <button onClick={goToFavorites}>Favorites</button>
       </div>
-      <LoginForm loggedInStatus={loggedInStatus} />
+      <LoginForm 
+        loggedInStatus={loggedInStatus}
+        handleLogin={handleLogin}
+      />
     </div>
   );
 };

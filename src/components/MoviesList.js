@@ -78,6 +78,7 @@ class MoviesList extends React.Component {
       <div className='moviesListPage'>
         <div className='movieList_header'>
           <MoviesListHeader 
+            handleLogin={this.props.handleLogin}
             userId={this.props.userInformation.userId}
             loggedInStatus={this.props.loggedInStatus}
           />
