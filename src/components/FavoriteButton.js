@@ -1,6 +1,7 @@
 import React from 'react'
 
 export default function FavoriteButton({isFavorite, addToFavorites,title}) {
+    // console.log(isFavorite)
     if (!isFavorite) {
         return (
             <div className="btnIsNotFavorite">

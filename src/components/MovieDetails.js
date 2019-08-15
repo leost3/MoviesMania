@@ -28,8 +28,7 @@ class Movie extends React.Component {
     const response = await axios(getMovieDetailsById);
     const movieDetails = response.data;
 
-    this.setState({ ...this.state.movieDetails, movieDetails });
-    this.setState({ userInfo: this.props.userInformation });
+    this.setState({ movieDetails, userInfo: this.props.userInformation });
     this.getMovieAvg();
     this.getMovieGeneralRatingFromDb();
     this.requestTrailerFromYoutube(`
@@ -107,12 +106,14 @@ class Movie extends React.Component {
   };
 
   checkIfMovieIsFavorited = () => {
+    console.log(this.state.movieDetails.id);
     PostRequest.post('/movies.php', {
       action: 'isFavorite',
-      movieId: parseInt(this.state.movieDetails.id),
-      userId: this.state.userInfo.userId,
+      movieId: this.state.movieDetails.id,
+      userId: parseInt(this.state.userInfo.userId),
     })
       .then(response => {
+        console.log(response.data.result)
         this.setState({ isFavorite: response.data.result });
       })
       .catch(error => {

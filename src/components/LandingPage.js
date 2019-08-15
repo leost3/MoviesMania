@@ -14,7 +14,7 @@ function Home() {
                 to='/signup'
                 style={{ textDecoration: 'none', color: 'whiteSmoke' }}
               >
-                SignUp
+                Sign Up Now!
               </Link>
             </button>
           </div>
