@@ -568,13 +568,16 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  cursor: pointer;
   font-size: 50px;
+  font-weight: 600;
+}
 
+.btnIsNotFavorite button {
+  cursor: pointer;
 }
 
 .btnIsNotFavorite i{
-  color: #444;
+  color: rgb(68, 68, 68);
 }
 
 .btnIsNotFavorite i:hover{
@@ -675,13 +678,6 @@ body {
   color: #bdc3c7;
 }
 
-/* 
-.VotingBtn .userHasRated button:hover {
-  background: rgb(7, 60, 104);
-  transition: 0.5s;
-} */
-
-
 .VotingBtn .userHasNotRated button {
   font-size: 2rem;
   border: 2px solid white;
@@ -715,7 +711,7 @@ body {
 }
 
 span.movieTitle {
-  color: #444;
+  color: rgb(247, 11, 11);
   font-weight: 600;
 }
 

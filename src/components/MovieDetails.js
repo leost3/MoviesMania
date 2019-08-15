@@ -109,7 +109,8 @@ class Movie extends React.Component {
   checkIfMovieIsFavorited = () => {
     PostRequest.post('/movies.php', {
       action: 'isFavorite',
-      movieId: parseInt(this.state.movieDetails.id)
+      movieId: parseInt(this.state.movieDetails.id),
+      userId: this.state.userInfo.userId,
     })
       .then(response => {
         this.setState({ isFavorite: response.data.result });

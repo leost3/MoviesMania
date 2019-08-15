@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import FavoriteMovieCard from './FavoriteMovieCard';
 import MoviesListHeader from './moviesListHeader';
 import LoaderRed from './LoaderRed';
