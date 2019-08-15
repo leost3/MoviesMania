@@ -2,11 +2,9 @@ import React from 'react';
 import LoginForm from './auth/LoginForm';
 import { withRouter } from 'react-router-dom';
 
-const MoviesListHeader = ({userId, loggedInStatus, history}) => {
+const MoviesListHeader = ({ userId, loggedInStatus, history }) => {
   const goToFavorites = () => {
-    history.push(
-      `/app/${userId}/favorites`
-    );
+    history.push(`/app/${userId}/favorites`);
   };
 
   const goToHome = () => {

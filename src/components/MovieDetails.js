@@ -33,8 +33,7 @@ class Movie extends React.Component {
     this.getMovieAvg();
     this.getMovieGeneralRatingFromDb();
     this.requestTrailerFromYoutube(`
-      ${this.state.movieDetails.title} movie official trailer`
-    );
+      ${this.state.movieDetails.title} movie official trailer`);
     this.checkIfMovieIsFavorited();
   }
 
