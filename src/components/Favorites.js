@@ -3,6 +3,8 @@ import axios from 'axios';
 import FavoriteMovieCard from './FavoriteMovieCard';
 import MoviesListHeader from './moviesListHeader';
 import LoaderRed from './LoaderRed';
+import PostRequest from '../api/Database';
+
 
 class FavoritesList extends React.Component {
   state = {
@@ -14,8 +16,8 @@ class FavoritesList extends React.Component {
   }
 
   retrieveFavoriteMoviesFromDB = () => {
-    axios
-      .post('http://localhost:8181/MoviesManiaPHP/api/movies.php', {
+    PostRequest
+      .post('/movies.php', {
         action: 'getFavorites',
         userId: parseInt(this.props.userInformation.userId)
       })
