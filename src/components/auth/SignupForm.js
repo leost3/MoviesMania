@@ -104,7 +104,7 @@ class SignupForm extends React.Component {
                             name="email" 
                             value={this.state.email} 
                             placeholder="email" 
-                            type="text" 
+                            type="email" 
                             onChange={this.handleInput}
                         />
                         Username
@@ -120,7 +120,7 @@ class SignupForm extends React.Component {
                             name="password" 
                             value={this.state.password} 
                             placeholder="password" 
-                            type="text" 
+                            type="password" 
                             onChange={this.handleInput}
                         />
                         Confirm Password
@@ -128,7 +128,7 @@ class SignupForm extends React.Component {
                             name="confirmPassword"  
                             value={this.state.confirmPassword} 
                             placeholder="Confirm your password" 
-                            type="text" 
+                            type="password" 
                             onChange={this.handleInput}
                         />
                         <button type="submit"> SignUp </button>

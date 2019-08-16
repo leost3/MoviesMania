@@ -12,13 +12,13 @@ export default function Form({loggedInStatus,handleSubmit,username,handleInput,p
                         placeholder="username" 
                         type="text" 
                         onChange={handleInput}
-                        />
+                    />
                     <input 
                         name="password"
                         className="" 
                         value={password} 
                         placeholder="password" 
-                        type="text" 
+                        type="password" 
                         onChange={handleInput}
                     />
                     <button type="submit"> Sign In </button>
