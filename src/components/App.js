@@ -50,7 +50,7 @@ class App extends React.Component {
         <Switch>
           <Route
             exact
-            path='/app/movies'
+            path='/app/movies/'
             render={() =>
               this.state.isLoggedIn ? (
                 <MoviesList
