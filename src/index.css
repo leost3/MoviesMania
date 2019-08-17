@@ -10,6 +10,9 @@ body, html {
   padding: 0;
 }
 
+* {
+  outline: none;
+}
 button {
   border: none;
   margin: 0;

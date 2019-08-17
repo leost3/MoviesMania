@@ -4,12 +4,12 @@ import PostRequest from '../../api/Database';
 
 class SignupForm extends React.Component {
     state = {
-      firstName: 'leo',
-      lastName: 'studart',
-      email: 'leo@studart',
-      username: 'sa',
-      password: 'sa',
-      confirmPassword: 'sa',
+      firstName: '',
+      lastName: '',
+      email: '',
+      username: '',
+      password: '',
+      confirmPassword: '',
       userAlreadyExists: false,
       passwordsAreEqual: true,
     }
